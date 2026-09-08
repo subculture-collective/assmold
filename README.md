@@ -15,10 +15,14 @@ OAuth and donations require separate configuration. Backups run daily into
 `runtime/backups`; they are local backups, not off-host disaster recovery.
 
 ```sh
-docker compose --env-file .env.assmold -f docker-compose.assmold.yml build
+# On Almaz, the legacy builder can reuse the already-installed dependency images.
+DOCKER_BUILDKIT=0 docker build -f Dockerfile.assmold-api --build-arg GIT_COMMIT="$RELEASE_TAG" -t "assmold-api:$RELEASE_TAG" .
+DOCKER_BUILDKIT=0 docker build -f Dockerfile.assmold-worker --build-arg GIT_COMMIT="$RELEASE_TAG" -t "assmold-worker:$RELEASE_TAG" .
+docker compose --env-file .env.assmold -f docker-compose.assmold.yml build frontend
 docker compose --env-file .env.assmold -f docker-compose.assmold.yml up -d
 ```
 
+Export `RELEASE_TAG` to the intended source commit before the build commands.
 The private `.env.assmold` must contain `DB_PASSWORD`, `SESSION_SECRET`,
 `ANALYTICS_HMAC_SECRET` (independent random values) and `RELEASE_TAG` (source commit).
 API/worker Dockerfiles reuse pinned upstream dependency images and package this

@@ -271,3 +271,6 @@ deploy-backups/
 # Assmold production state
 .env.assmold
 runtime/
+
+.playwright-cli/
+output/playwright/
