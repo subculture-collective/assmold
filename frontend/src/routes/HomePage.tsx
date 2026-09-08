@@ -71,8 +71,8 @@ export default function HomePage() {
             <div className="space-y-6">
               <h1 className="archive-display">Find the moment. Read the record.</h1>
               <p className="max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-                Search AsmonTV and Asmongold Clips by topic or exact phrase, then jump
-                straight to the moment in the original video.
+                Search AsmonTV and Asmongold Clips by topic or exact phrase, then jump straight to
+                the moment in the original video.
               </p>
             </div>
 
@@ -190,44 +190,46 @@ export default function HomePage() {
         </AsyncError>
       )}
 
-      <section className="archive-section">
-        {!authLoading && !user && import.meta.env.VITE_AUTH_ENABLED !== 'false' ? (
-          <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
-            <div>
-              <div className="archive-eyebrow">Save your archive trail</div>
-              <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-ink">
-                Sign in to synchronize saved moments and searches.
-              </h2>
+      {import.meta.env.VITE_AUTH_ENABLED !== 'false' && (
+        <section className="archive-section">
+          {!authLoading && !user ? (
+            <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+              <div>
+                <div className="archive-eyebrow">Save your archive trail</div>
+                <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-ink">
+                  Sign in to synchronize saved moments and searches.
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button type="button" onClick={login} className="btn min-h-11 px-4 text-sm">
+                  Continue with Google
+                </button>
+                <button
+                  type="button"
+                  onClick={loginTwitch}
+                  className="btn-secondary min-h-11 px-4 text-sm"
+                >
+                  Continue with Twitch
+                </button>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={login} className="btn min-h-11 px-4 text-sm">
-                Continue with Google
-              </button>
-              <button
-                type="button"
-                onClick={loginTwitch}
-                className="btn-secondary min-h-11 px-4 text-sm"
-              >
-                Continue with Twitch
-              </button>
+          ) : (
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="archive-eyebrow">Archive trail</div>
+                <p className="mt-2 font-semibold text-ink">
+                  {authLoading ? 'Checking your account…' : 'Your saves are synchronized.'}
+                </p>
+              </div>
+              {!authLoading && (
+                <Link to="/saved" className="btn-secondary min-h-11 px-4 text-sm">
+                  Open my saves
+                </Link>
+              )}
             </div>
-          </div>
-        ) : (
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <div className="archive-eyebrow">Archive trail</div>
-              <p className="mt-2 font-semibold text-ink">
-                {authLoading ? 'Checking your account…' : 'Your saves are synchronized.'}
-              </p>
-            </div>
-            {!authLoading && (
-              <Link to="/saved" className="btn-secondary min-h-11 px-4 text-sm">
-                Open my saves
-              </Link>
-            )}
-          </div>
-        )}
-      </section>
+          )}
+        </section>
+      )}
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="archive-section space-y-5">
