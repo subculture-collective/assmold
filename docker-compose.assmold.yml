@@ -1,7 +1,7 @@
 name: assmold
 
 x-app: &app
-  image: assmold-api:${RELEASE_TAG:-local}
+  image: assmold-api:${API_RELEASE_TAG:-${RELEASE_TAG:-local}}
   env_file: .env.assmold
   environment: &environment
     DATABASE_URL: postgresql+psycopg://postgres:${DB_PASSWORD:?DB_PASSWORD is required}@db:5432/transcripts
@@ -67,7 +67,7 @@ services:
       context: .
       dockerfile: Dockerfile.assmold-api
       args:
-        GIT_COMMIT: ${RELEASE_TAG:-local}
+        ASSMOLD_COMMIT: ${RELEASE_TAG:-local}
     container_name: assmold-api
     networks: [default, management]
     volumes:
