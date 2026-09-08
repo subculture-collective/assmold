@@ -132,6 +132,9 @@ services:
 
   summary-refresher:
     <<: *app
+    environment:
+      <<: *environment
+      PYTHONPATH: /app
     depends_on:
       migrations:
         condition: service_completed_successfully
