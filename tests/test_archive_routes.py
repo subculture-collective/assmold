@@ -139,7 +139,7 @@ class TestArchiveRoutes:
             text(
                 "INSERT INTO segments (video_id, start_ms, end_ms, text, speaker_label) VALUES (:vid, 1000, 5000, :text, NULL)"
             ),
-            {"vid": str(video_id), "text": "ICE protests and Gaza coverage made this a major news segment."},
+            {"vid": str(video_id), "text": "World of Warcraft and gaming coverage made this a major segment."},
         )
         person = create_person(db_session, {"display_name": "Guest One", "slug": "guest-one"})
         tag = create_tag(db_session, {"label": "Chadvice", "slug": "chadvice"})
