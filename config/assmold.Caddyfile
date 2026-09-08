@@ -1,0 +1,8 @@
+http://assmold.subcult.tv {
+    handle_path /api/* {
+        reverse_proxy assmold-api:8000
+    }
+    handle {
+        reverse_proxy assmold-web:80
+    }
+}

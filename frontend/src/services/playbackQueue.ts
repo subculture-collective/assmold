@@ -1,6 +1,6 @@
 import type { MentionExportItem } from '../types/api';
 
-const KEY = 'hasanara.playback-queue.v1';
+const KEY = 'assmold.playback-queue.v1';
 
 function read(): MentionExportItem[] {
   try {

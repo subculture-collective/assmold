@@ -139,7 +139,7 @@ def test_build_openrouter_request_uses_identical_strict_controls():
     assert body["temperature"] == 0
     assert body["reasoning"] == {"enabled": False, "exclude": True}
     response_schema = body["response_format"]["json_schema"]
-    assert response_schema["name"] == "hasanara_episode_enrichment"
+    assert response_schema["name"] == "assmold_episode_enrichment"
     assert response_schema["strict"] is True
     assert response_schema["schema"] is not EPISODE_ENRICHMENT_SCHEMA
     assert response_schema["schema"]["properties"]["chapters"]["minItems"] == 4

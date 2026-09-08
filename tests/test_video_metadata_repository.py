@@ -50,7 +50,7 @@ class _FakeMetadataDb:
         self.rollback_count += 1
 
     def add_video(
-        self, *, video_id: str | uuid.UUID, title: str, youtube_id: str = "yt-1", channel_name: str = "HasanAbi"
+        self, *, video_id: str | uuid.UUID, title: str, youtube_id: str = "yt-1", channel_name: str = "Asmongold"
     ):
         self.videos[str(video_id)] = {
             "id": video_id,

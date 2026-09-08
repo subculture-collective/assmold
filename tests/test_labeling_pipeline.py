@@ -279,7 +279,7 @@ def test_extract_labels_for_video_uses_title_assignment_source(monkeypatch):
     from app.archive.labeling import pipeline
 
     db = FakeDb()
-    db.title = "HasanAbi April 23, 2026 – hanging out after Chadvice"
+    db.title = "Asmongold April 23, 2026 – hanging out after Chadvice"
     assignment_calls = []
 
     monkeypatch.setattr(pipeline, "create_extraction_run", lambda *args, **kwargs: "run-title")

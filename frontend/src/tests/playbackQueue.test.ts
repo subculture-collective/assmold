@@ -20,7 +20,7 @@ describe('playbackQueue', () => {
 
     playbackQueue.replace([item]);
     expect(localStorage.setItem).toHaveBeenLastCalledWith(
-      'hasanara.playback-queue.v1',
+      'assmold.playback-queue.v1',
       JSON.stringify([item])
     );
 

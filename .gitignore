@@ -267,3 +267,7 @@ cookies.txt
 release-images.json
 .release-commit
 deploy-backups/
+
+# Assmold production state
+.env.assmold
+runtime/

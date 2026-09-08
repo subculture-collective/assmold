@@ -121,11 +121,11 @@ class TestTranscribeChunkFasterWhisper:
         whisper_runner.transcribe_chunk(
             wav_path,
             **TRANSCRIBE_KWARGS,
-            initial_prompt="Hasan Piker, HasanAbi, Oliver Larkin, Melat Kiros, Enbies, pre-noon",
+            initial_prompt="Asmongold, Asmongold, Oliver Larkin, Melat Kiros, Enbies, pre-noon",
         )
 
         assert mock_model.transcribe.call_args.kwargs["initial_prompt"] == (
-            "Hasan Piker, HasanAbi, Oliver Larkin, Melat Kiros, Enbies, pre-noon"
+            "Asmongold, Asmongold, Oliver Larkin, Melat Kiros, Enbies, pre-noon"
         )
 
     @patch("worker.whisper_runner._get_model")

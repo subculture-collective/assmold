@@ -13,10 +13,10 @@ export default function AboutPage() {
       <section className="archive-masthead">
         <div className="relative z-10 grid min-h-[29rem] gap-10 px-5 py-9 sm:px-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(19rem,0.65fr)] lg:items-end lg:px-12 lg:py-14">
           <div className="space-y-7">
-            <div className="archive-eyebrow">About HasanAra</div>
+            <div className="archive-eyebrow">About assmold</div>
             <h1 className="archive-display">A broadcast archive built like a public record.</h1>
             <p className="max-w-3xl text-lg leading-8 text-muted sm:text-xl">
-              HasanAra makes long-form political livestreams legible: searchable transcripts,
+              assmold indexes videos from AsmonTV and Asmongold Clips: searchable transcripts,
               timestamped evidence, topic histories, and direct paths back to the original video.
             </p>
             <div className="flex flex-wrap gap-4 text-sm font-semibold">
@@ -31,7 +31,7 @@ export default function AboutPage() {
           <aside className="archive-section">
             <div className="archive-eyebrow">Project boundary</div>
             <p className="mt-4 text-lg font-semibold leading-7 text-ink">
-              HasanAra is an independent Subcult project and is not affiliated with HasanAbi,
+              assmold is an independent Subcult project and is not affiliated with Asmongold,
               Twitch, or YouTube.
             </p>
             <p className="mt-3 text-sm leading-6 text-muted">
@@ -71,7 +71,7 @@ export default function AboutPage() {
             Search results are leads, not verdicts.
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">
-            Automated transcripts and generated chapters can be wrong. HasanAra keeps the source,
+            Automated transcripts and generated chapters can be wrong. assmold keeps the source,
             timestamps, and transcript context visible so readers can verify what was actually said.
             Corrections should improve the record without erasing its provenance.
           </p>

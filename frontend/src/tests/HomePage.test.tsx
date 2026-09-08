@@ -26,7 +26,7 @@ describe('HomePage', () => {
       return { json: vi.fn().mockResolvedValue({}) } as never;
     }) as never);
     vi.spyOn(api, 'getArchiveSummary').mockResolvedValue({
-      creator_name: 'HasanAra',
+      creator_name: 'assmold',
       video_count: 12,
       total_duration_seconds: 7260,
       transcript_word_count: 4200,
@@ -63,7 +63,7 @@ describe('HomePage', () => {
     });
 
     expect(screen.getByPlaceholderText('A topic, quote, guest, or phrase…')).toBeInTheDocument();
-    expect(screen.getByLabelText('Search the HasanAbi archive')).toBeInTheDocument();
+    expect(screen.getByLabelText('Search the Asmongold archive')).toBeInTheDocument();
     expect(screen.getByText('Searchable VODs')).toBeInTheDocument();
     expect(screen.getAllByText('Newest VOD').length).toBeGreaterThan(0);
     expect(screen.getByRole('group', { name: 'VOD metadata' })).toBeInTheDocument();
@@ -73,13 +73,13 @@ describe('HomePage', () => {
     expect(screen.getByText('+1')).toBeInTheDocument();
     expect(screen.queryByText('Gaming')).not.toBeInTheDocument();
     expect(screen.getByText('rent')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'labor' })).toHaveAttribute('href', '/search?q=labor');
+    expect(screen.getByRole('link', { name: 'gaming' })).toHaveAttribute('href', '/search?q=gaming');
     expect(screen.getByRole('link', { name: /rent/ })).toHaveAttribute('href', '/search?q=rent');
     expect(screen.getByRole('link', { name: /Explore the archive/ })).toHaveAttribute(
       'href',
       '/explore'
     );
-    expect(screen.getByRole('link', { name: 'Browse every VOD' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Browse videos and clips' })).toHaveAttribute(
       'href',
       '/episodes'
     );
@@ -123,7 +123,7 @@ describe('HomePage', () => {
       </MemoryRouter>
     );
 
-    const input = screen.getByLabelText('Search the HasanAbi archive');
+    const input = screen.getByLabelText('Search the Asmongold archive');
     await user.type(input, '   ');
     await user.click(screen.getByRole('button', { name: 'Search archive' }));
     expect(screen.getByTestId('location')).toHaveTextContent('/');

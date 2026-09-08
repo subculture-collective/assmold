@@ -1,3 +1,32 @@
+# assmold
+
+A searchable Asmongold video and clip archive, forked from HasanAra.
+
+Sources: [AsmonTV](https://www.youtube.com/@AsmonTV) and
+[Asmongold Clips](https://www.youtube.com/@AsmongoldClips).
+Public deployment: https://assmold.subcult.tv on Almaz.
+
+Use `docker-compose.assmold.yml` for this fork. The older Compose overlays and
+historical documentation below describe the upstream HasanAra deployment.
+Assmold has an independent database, Redis, media/cache storage, sessions, and backups.
+The launch uses PostgreSQL search, YouTube captions, and a single CPU small-model
+transcription worker. Discovery runs every six hours. Paid enrichment is disabled;
+OAuth and donations require separate configuration. Backups run daily into
+`runtime/backups`; they are local backups, not off-host disaster recovery.
+
+```sh
+docker compose --env-file .env.assmold -f docker-compose.assmold.yml build
+docker compose --env-file .env.assmold -f docker-compose.assmold.yml up -d
+```
+
+The private `.env.assmold` must contain `DB_PASSWORD`, `SESSION_SECRET`,
+`ANALYTICS_HMAC_SECRET` (independent random values) and `RELEASE_TAG` (source commit).
+API/worker Dockerfiles reuse pinned upstream dependency images and package this
+fork's application source. `config/assmold.Caddyfile` is imported by the existing
+Almaz edge Caddy; the wildcard Cloudflare tunnel supplies public HTTPS.
+
+---
+
 # HasanAra
 
 HasanAra is a citation-first HasanAbi VOD archive. It searches timestamped transcripts, groups evidence by episode, and provides topic timelines, opinion-history revisions, related episodes, quoted moments, and portable mention exports.

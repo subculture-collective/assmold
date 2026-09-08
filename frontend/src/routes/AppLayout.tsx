@@ -15,68 +15,68 @@ const navItems = [
 const routeMeta: Array<{ match: RegExp; title: string; description: string }> = [
   {
     match: /^\/$/,
-    title: 'HasanAra — Broadcast archive',
-    description: 'Search and watch the public HasanAbi broadcast archive.',
+    title: 'assmold — Broadcast archive',
+    description: 'Search and watch the public Asmongold broadcast archive.',
   },
   {
     match: /^\/search/,
-    title: 'Search transcripts — HasanAra',
+    title: 'Search transcripts — assmold',
     description: 'Find timestamped, citation-backed moments across the archive.',
   },
   {
     match: /^\/explore/,
-    title: 'Explore topics — HasanAra',
+    title: 'Explore topics — assmold',
     description: 'Explore public archive topics, periods, and evidence.',
   },
   {
     match: /^\/(episodes|streams)/,
-    title: 'Watch the archive — HasanAra',
+    title: 'Watch the archive — assmold',
     description: 'Browse the latest VODs, topics, and cited transcript moments.',
   },
   {
     match: /^\/timeline/,
-    title: 'Archive timeline — HasanAra',
+    title: 'Archive timeline — assmold',
     description: 'Browse broadcasts chronologically.',
   },
   {
     match: /^\/topics\//,
-    title: 'Topic evidence — HasanAra',
+    title: 'Topic evidence — assmold',
     description: 'Review a topic through timestamped transcript evidence.',
   },
   {
     match: /^\/v\//,
-    title: 'Episode transcript — HasanAra',
+    title: 'Episode transcript — assmold',
     description: 'Watch a source VOD with its interactive transcript.',
   },
   {
     match: /^\/saved/,
-    title: 'Saved moments — HasanAra',
+    title: 'Saved moments — assmold',
     description: 'Return to saved searches and transcript moments.',
   },
   {
     match: /^\/account/,
-    title: 'Account — HasanAra',
-    description: 'Manage your HasanAra account.',
+    title: 'Account — assmold',
+    description: 'Manage your assmold account.',
   },
   {
     match: /^\/support/,
-    title: 'Support the archive — HasanAra',
-    description: 'Help keep HasanAra public, searchable, and independently maintained.',
+    title: 'Support the archive — assmold',
+    description: 'Help keep assmold public, searchable, and independently maintained.',
   },
   {
     match: /^\/about/,
-    title: 'About the archive — HasanAra',
-    description: 'How HasanAra turns public broadcasts into a searchable, cited record.',
+    title: 'About the archive — assmold',
+    description: 'How assmold turns public broadcasts into a searchable, cited record.',
   },
   {
     match: /^\/(privacy|terms)/,
-    title: 'Project policies — HasanAra',
-    description: 'Privacy and terms for the HasanAra public archive.',
+    title: 'Project policies — assmold',
+    description: 'Privacy and terms for the assmold public archive.',
   },
   {
     match: /^\/admin/,
-    title: 'Archive administration — HasanAra',
-    description: 'Operate the HasanAra archive.',
+    title: 'Archive administration — assmold',
+    description: 'Operate the assmold archive.',
   },
 ];
 
@@ -89,7 +89,7 @@ function RouteTransitionManager() {
 
   useEffect(() => {
     const meta = routeMeta.find((item) => item.match.test(location.pathname)) ?? {
-      title: 'HasanAra',
+      title: 'assmold',
       description: 'Public broadcast archive.',
     };
     document.title = meta.title;
@@ -121,7 +121,7 @@ function RouteTransitionManager() {
           target.focus({ preventScroll: true });
         }
       }
-      setAnnouncement(meta.title.replace(' — HasanAra', ''));
+      setAnnouncement(meta.title.replace(' — assmold', ''));
     });
   }, [location.pathname, navigationType]);
 
@@ -174,7 +174,7 @@ export default function AppLayout() {
       >
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-4 py-3 lg:px-6">
           <div className="flex items-center gap-4">
-            <Link to="/" className="group flex items-center gap-3" aria-label="Home - HasanAra">
+            <Link to="/" className="group flex items-center gap-3" aria-label="Home - assmold">
               <img
                 src="/icon.svg"
                 alt=""
@@ -184,7 +184,7 @@ export default function AppLayout() {
               />
               <span>
                 <span className="block text-xl font-semibold leading-none tracking-[-0.04em] text-ink group-hover:text-accent">
-                  HasanAra
+                  assmold
                 </span>
                 <span className="mt-1 hidden text-[8px] font-bold uppercase tracking-[0.24em] text-subtle sm:block">
                   Broadcast archive
@@ -489,7 +489,7 @@ export default function AppLayout() {
       >
         <div className="mx-auto grid max-w-[100rem] gap-5 px-4 py-7 text-sm text-muted sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center lg:px-6">
           <p>
-            &copy; {new Date().getFullYear()} HasanAra. A{' '}
+            &copy; {new Date().getFullYear()} assmold. A{' '}
             <a href="https://subcult.tv" className="action-link underline underline-offset-2">
               Subcult
             </a>{' '}

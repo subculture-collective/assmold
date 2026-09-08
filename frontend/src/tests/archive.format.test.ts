@@ -22,12 +22,12 @@ describe('archive moment links', () => {
   });
 
   it('uses an intentional date treatment for missing or dangling titles', () => {
-    expect(formatVideoTitle('HasanAbi broadcast —', '2026-08-07T00:00:00Z')).toBe(
-      'HasanAbi broadcast'
+    expect(formatVideoTitle('Asmongold broadcast —', '2026-08-07T00:00:00Z')).toBe(
+      'Asmongold broadcast'
     );
     expect(formatVideoTitle('', '2026-08-07T00:00:00Z')).toMatch(/^Broadcast from /);
-    expect(formatVideoTitle('HasanAbi July 10, 2026 –', null)).toBe(
-      'HasanAbi broadcast — July 10, 2026'
+    expect(formatVideoTitle('Asmongold July 10, 2026 –', null)).toBe(
+      'Asmongold broadcast — July 10, 2026'
     );
   });
 

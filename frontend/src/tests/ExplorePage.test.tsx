@@ -28,7 +28,7 @@ describe('ExplorePage', () => {
   ): Awaited<ReturnType<typeof api.getExploreIntelligence>> {
     return {
       summary: {
-        creator_name: 'HasanAra',
+        creator_name: 'assmold',
         video_count: 2,
         total_duration_seconds: 3600,
         transcript_word_count: 200,
@@ -84,7 +84,7 @@ describe('ExplorePage', () => {
 
     const baseResponse = {
       summary: {
-        creator_name: 'HasanAra',
+        creator_name: 'assmold',
         video_count: 12,
         total_duration_seconds: 7200,
         transcript_word_count: 50000,
@@ -227,7 +227,7 @@ describe('ExplorePage', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('heading', { name: 'Explore the HasanAbi VOD archive' })
+        screen.getByRole('heading', { name: 'Explore the Asmongold VOD archive' })
       ).toBeInTheDocument();
     });
     expect(screen.getByRole('navigation', { name: /Discovery rail/i })).toBeInTheDocument();
@@ -311,7 +311,7 @@ describe('ExplorePage', () => {
 
     const response = {
       summary: {
-        creator_name: 'HasanAra',
+        creator_name: 'assmold',
         video_count: 1,
         total_duration_seconds: 3600,
         transcript_word_count: 200,
@@ -355,7 +355,7 @@ describe('ExplorePage', () => {
 
     await waitFor(() =>
       expect(
-        screen.getByRole('heading', { name: 'Explore the HasanAbi VOD archive' })
+        screen.getByRole('heading', { name: 'Explore the Asmongold VOD archive' })
       ).toBeInTheDocument()
     );
 
@@ -445,7 +445,7 @@ describe('ExplorePage', () => {
 
     await waitFor(() =>
       expect(
-        screen.getByRole('heading', { name: 'Explore the HasanAbi VOD archive' })
+        screen.getByRole('heading', { name: 'Explore the Asmongold VOD archive' })
       ).toBeInTheDocument()
     );
     fireEvent.click(screen.getByRole('button', { name: 'Weeks' }));

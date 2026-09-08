@@ -14,7 +14,7 @@ def test_video_strata_cover_representative_archive_formats():
 
     for title, expected in examples.items():
         assert classify_video_stratum({"title": title, "duration_seconds": 7_200}) == expected
-    assert classify_video_stratum({"title": "HasanAbi Full Stream", "duration_seconds": 20_000}) == "long_mixed"
+    assert classify_video_stratum({"title": "Asmongold Full Stream", "duration_seconds": 20_000}) == "long_mixed"
 
 
 def test_representative_selection_balances_strata_and_is_deterministic():
@@ -30,7 +30,7 @@ def test_representative_selection_balances_strata_and_is_deterministic():
         {"id": "gaming-1", "title": "Hasan plays Elden Ring", "duration_seconds": 9_000, "uploaded_at": "2026-08-05"},
         {"id": "react-1", "title": "Watching Jubilee", "duration_seconds": 6_000, "uploaded_at": "2026-08-04"},
         {"id": "segment-1", "title": "Chadvice returns", "duration_seconds": 4_000, "uploaded_at": "2026-08-03"},
-        {"id": "mixed-1", "title": "HasanAbi full stream", "duration_seconds": 20_000, "uploaded_at": "2026-08-02"},
+        {"id": "mixed-1", "title": "Asmongold full stream", "duration_seconds": 20_000, "uploaded_at": "2026-08-02"},
     ]
 
     selected = select_representative_videos(rows, per_stratum=1, total_limit=6)

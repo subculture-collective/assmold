@@ -11,7 +11,7 @@ import {
 import { VideoCard } from '../components/archive';
 import { AsyncError } from '../components/async/AsyncFeedback';
 
-const searchExamples = ['labor', 'Gaza', 'housing', 'election'];
+const searchExamples = ['World of Warcraft', 'gaming', 'streaming', 'reactions'];
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -64,15 +64,15 @@ export default function HomePage() {
         <div className="relative z-10 grid min-h-[34rem] gap-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(24rem,0.85fr)] lg:items-end lg:px-12 lg:py-14">
           <div className="space-y-8">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="archive-eyebrow">HasanAbi broadcast archive</span>
+              <span className="archive-eyebrow">Asmongold videos & clips</span>
               <span className="source-pill">searchable transcripts</span>
             </div>
 
             <div className="space-y-6">
               <h1 className="archive-display">Find the moment. Read the record.</h1>
               <p className="max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-                Search years of broadcasts by topic or exact phrase, then move from the result
-                straight into the cited transcript and VOD.
+                Search AsmonTV and Asmongold Clips by topic or exact phrase, then jump
+                straight to the moment in the original video.
               </p>
             </div>
 
@@ -81,7 +81,7 @@ export default function HomePage() {
                 Explore the archive →
               </Link>
               <Link to="/episodes" className="text-muted transition-colors hover:text-ink">
-                Browse every VOD
+                Browse videos and clips
               </Link>
               <Link to="/support" className="text-muted transition-colors hover:text-ink">
                 Support the archive
@@ -93,7 +93,7 @@ export default function HomePage() {
             <div className="archive-rule-title">Search the record</div>
             <form onSubmit={onSubmit} className="archive-command">
               <label className="sr-only" htmlFor="home-search">
-                Search the HasanAbi archive
+                Search the Asmongold archive
               </label>
               <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
                 <div className="flex min-w-0 items-center gap-3 px-3">

@@ -1,0 +1,173 @@
+name: assmold
+
+x-app: &app
+  image: assmold-api:${RELEASE_TAG:-local}
+  env_file: .env.assmold
+  environment: &environment
+    DATABASE_URL: postgresql+psycopg://postgres:${DB_PASSWORD:?DB_PASSWORD is required}@db:5432/transcripts
+    REDIS_URL: redis://redis:6379/0
+    ENVIRONMENT: production
+    FRONTEND_ORIGIN: https://assmold.subcult.tv
+    CORS_ALLOW_ORIGINS: https://assmold.subcult.tv
+    FORWARDED_ALLOW_IPS: 172.20.0.250
+    SEARCH_BACKEND: postgres
+    OTEL_SDK_DISABLED: 'true'
+    ARCHIVE_ENRICHMENT_ENABLED: 'false'
+  restart: unless-stopped
+  labels:
+    com.centurylinklabs.watchtower.enable: 'false'
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: transcripts
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+    volumes:
+      - ./runtime/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d transcripts']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    cpus: 1
+    mem_limit: 1g
+
+  redis:
+    image: redis:7-alpine
+    command: ['redis-server', '--save', '60', '1', '--maxmemory', '128mb', '--maxmemory-policy', 'allkeys-lru']
+    volumes:
+      - ./runtime/redis:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    mem_limit: 192m
+
+  migrations:
+    <<: *app
+    environment:
+      <<: *environment
+      ALLOW_SESSION_TOKEN_CONTRACT_MIGRATION: 'true'
+      ALLOW_EVENT_TOKEN_CONTRACT_MIGRATION: 'true'
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ['python3', 'scripts/run_migrations.py', 'upgrade']
+    restart: 'no'
+    healthcheck:
+      disable: true
+
+  api:
+    <<: *app
+    build:
+      context: .
+      dockerfile: Dockerfile.assmold-api
+      args:
+        GIT_COMMIT: ${RELEASE_TAG:-local}
+    container_name: assmold-api
+    networks: [default, management]
+    volumes:
+      - ./runtime/data:/data
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    cpus: 1
+    mem_limit: 1g
+
+  frontend:
+    image: assmold-frontend:${RELEASE_TAG:-local}
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: assmold-web
+    networks: [management]
+    restart: unless-stopped
+    mem_limit: 128m
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '--spider', 'http://127.0.0.1/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    labels:
+      com.centurylinklabs.watchtower.enable: 'false'
+
+  worker:
+    <<: *app
+    image: assmold-worker:${RELEASE_TAG:-local}
+    build:
+      context: .
+      dockerfile: Dockerfile.assmold-worker
+      args:
+        GIT_COMMIT: ${RELEASE_TAG:-local}
+    environment:
+      <<: *environment
+      CHANNEL_SYNC_URLS: https://www.youtube.com/@AsmonTV/videos,https://www.youtube.com/@AsmongoldClips/videos
+      CHANNEL_SYNC_INTERVAL_SECONDS: '21600'
+      MAX_PARALLEL_JOBS: '1'
+      WHISPER_MODEL: small
+      FORCE_GPU: 'false'
+      CLEANUP_AFTER_PROCESS: 'true'
+      ENABLE_DIARIZATION: 'false'
+      HF_HOME: /root/.cache/hf
+    volumes:
+      - ./runtime/data:/data
+      - ./runtime/cache:/root/.cache
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    command: ['python3', '-m', 'worker.loop']
+    healthcheck:
+      disable: true
+    cpus: 2
+    mem_limit: 4g
+    stop_grace_period: 10m
+
+  summary-refresher:
+    <<: *app
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    command: ['sh', '-ec', 'while true; do python3 scripts/refresh_archive_summary_stats.py; sleep 300; done']
+    healthcheck:
+      disable: true
+    cpus: 0.25
+    mem_limit: 256m
+
+  backup:
+    image: postgres:16
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGDATABASE: transcripts
+      PGPASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
+    volumes:
+      - ./runtime/backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - sh
+      - -ec
+      - |
+        while true; do
+          file=/backups/assmold-$$(date -u +%Y%m%dT%H%M%SZ).dump
+          pg_dump -Fc -f "$$file.tmp"
+          pg_restore --list "$$file.tmp" > /dev/null
+          mv "$$file.tmp" "$$file"
+          sleep 86400
+        done
+    restart: unless-stopped
+    mem_limit: 256m
+
+networks:
+  management:
+    external: true
+    name: management

@@ -51,7 +51,7 @@ export default function StreamCard({ video, dateField }: StreamCardProps) {
           <p className="feed-card-support">
             {metadata.length > 0
               ? metadata.join(' · ')
-              : video.channel_name || 'HasanAbi broadcast archive'}
+              : video.channel_name || 'Asmongold broadcast archive'}
           </p>
         </div>
         <details className="feed-card-menu">

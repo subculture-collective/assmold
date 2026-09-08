@@ -16,7 +16,7 @@ from .openrouter_enrichment import PROMPT_VERSION
 
 # A single owner across prompts/models and one-shot CLI invocations. A dedicated
 # connection must retain this session lock across commits and HTTP requests.
-OWNER_LOCK = "hasanara-archive-enrichment-owner-v1"
+OWNER_LOCK = "assmold-archive-enrichment-owner-v1"
 MAX_ATTEMPTS = 3
 
 # Exact local validation failures, never provider messages or arbitrary prefixes.

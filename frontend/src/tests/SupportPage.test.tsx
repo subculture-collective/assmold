@@ -31,7 +31,7 @@ describe('SupportPage', () => {
     expect((await axe.run(container)).violations).toEqual([]);
   });
 
-  it('opens the configured Stripe-hosted checkout without sending card data through HasanAra', async () => {
+  it('opens the configured Stripe-hosted checkout without sending card data through assmold', async () => {
     vi.spyOn(api, 'getSupportConfig').mockResolvedValue({
       donations_enabled: true,
       payment_url: 'https://buy.stripe.com/test_example',
@@ -47,6 +47,6 @@ describe('SupportPage', () => {
     expect(link).toHaveAttribute('href', 'https://buy.stripe.com/test_example');
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
-    expect(screen.getByText(/Card details never touch HasanAra/)).toBeInTheDocument();
+    expect(screen.getByText(/Card details never touch assmold/)).toBeInTheDocument();
   });
 });

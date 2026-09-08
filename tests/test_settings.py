@@ -182,7 +182,7 @@ def test_archive_enrichment_defaults_to_disabled_v4_pro_candidates():
 
     assert config.WHISPER_LANGUAGE == "en"
     assert config.WHISPER_VAD_FILTER is True
-    assert "HasanAbi" in config.WHISPER_INITIAL_PROMPT
+    assert "Asmongold" in config.WHISPER_INITIAL_PROMPT
     assert config.ARCHIVE_ENRICHMENT_ENABLED is False
     assert config.ARCHIVE_ENRICHMENT_MODEL == "deepseek/deepseek-v4-pro"
     assert config.ARCHIVE_ENRICHMENT_MAX_WINDOW_MINUTES == 90
@@ -602,7 +602,7 @@ def test_validate_production_settings_allows_complete_oauth_config():
         FRONTEND_ORIGIN="https://app.example.com",
         OAUTH_GOOGLE_CLIENT_ID="google-client-id",
         OAUTH_GOOGLE_CLIENT_SECRET="google-client-secret",
-        OAUTH_GOOGLE_REDIRECT_URI="https://api.hasanara.test/auth/callback/google",
+        OAUTH_GOOGLE_REDIRECT_URI="https://api.assmold.test/auth/callback/google",
     )
 
     validate_production_settings(config)
@@ -623,7 +623,7 @@ def test_validate_production_settings_rejects_placeholder_oauth_redirect_uri(red
         ENVIRONMENT="production",
         SESSION_SECRET=SESSION_SECRET,
         DATABASE_URL="postgresql+psycopg://postgres:strong-password@db/transcripts",
-        FRONTEND_ORIGIN="https://app.hasanara.test",
+        FRONTEND_ORIGIN="https://app.assmold.test",
         OAUTH_GOOGLE_CLIENT_ID="google-client-id",
         OAUTH_GOOGLE_CLIENT_SECRET="google-client-secret",
         OAUTH_GOOGLE_REDIRECT_URI=redirect_uri,
@@ -644,7 +644,7 @@ def test_validate_production_settings_rejects_disabled_oauth_state_validation():
         FRONTEND_ORIGIN="https://app.example.com",
         OAUTH_GOOGLE_CLIENT_ID="google-client-id",
         OAUTH_GOOGLE_CLIENT_SECRET="google-client-secret",
-        OAUTH_GOOGLE_REDIRECT_URI="https://api.hasanara.test/auth/callback/google",
+        OAUTH_GOOGLE_REDIRECT_URI="https://api.assmold.test/auth/callback/google",
         OAUTH_STATE_VALIDATION=False,
     )
 

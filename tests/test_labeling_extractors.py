@@ -245,7 +245,7 @@ def test_title_alias_extractor_emits_title_source_candidates():
     ]
 
     candidates = extract_title_alias_candidates(
-        {"id": "video-1", "title": "HasanAbi April 23, 2026 – hanging out after Chadvice"}, aliases
+        {"id": "video-1", "title": "Asmongold April 23, 2026 – hanging out after Chadvice"}, aliases
     )
 
     assert [candidate.label for candidate in candidates] == ["Chadvice"]
@@ -294,7 +294,7 @@ def test_person_title_role_handles_guest_lists_and_avoids_speech_false_positives
     assert infer_person_title_role("Austin Calls", "Austin Calls") == "caller"
     assert (
         infer_person_title_role(
-            "Jake Tapper calls Hasan antisemitic",
+            "Jake Tapper calls Asmon antisemitic",
             "Jake Tapper",
         )
         == "subject"
@@ -340,20 +340,20 @@ def test_alias_evidence_snippet_is_centered_on_the_actual_match():
     assert candidates[0].evidence[0]["snippet"].startswith("…")
 
 
-def test_title_person_suggester_finds_names_and_filters_hasan_noise():
+def test_title_person_suggester_finds_names_and_filters_asmon_noise():
     names = suggest_person_names_from_title(
-        "HasanAbi May 27, 2026 – back in LA, Senate candidate Julie Gonzales visits"
+        "Asmongold May 27, 2026 – back in LA, Senate candidate Julie Gonzales visits"
     )
 
     assert "Julie Gonzales" in names
-    assert "HasanAbi" not in names
+    assert "Asmongold" not in names
 
 
 def test_title_person_suggester_groups_examples():
     suggestions = suggest_person_names_from_titles(
         [
-            {"id": "v1", "title": "HasanAbi – Julie Gonzales visits"},
-            {"id": "v2", "title": "HasanAbi – talking with Julie Gonzales"},
+            {"id": "v1", "title": "Asmongold – Julie Gonzales visits"},
+            {"id": "v2", "title": "Asmongold – talking with Julie Gonzales"},
         ]
     )
 

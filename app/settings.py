@@ -126,7 +126,7 @@ class Settings(BaseSettings):
 
     # Frontend origin for CORS/redirects
     FRONTEND_ORIGIN: str = "http://localhost:5173"
-    # Public Stripe-hosted Payment Link. HasanAra never accepts card details or
+    # Public Stripe-hosted Payment Link. assmold never accepts card details or
     # creates charges directly; an empty value keeps donations disabled.
     DONATION_PAYMENT_LINK_URL: str = ""
     # Session and OAuth
@@ -187,7 +187,7 @@ class Settings(BaseSettings):
     JOB_CREATE_MAX_CHANNEL_VIDEOS: int = 250  # Maximum videos a channel job may expand into
     JOB_CREATE_MAX_BATCH_EXPECTED_JOBS: int = 100  # Upper bound for staged batch coordination fan-out
     JOB_CREATE_ADMIN_BYPASS_QUOTAS: bool = True  # Admins may create ingestion jobs without quota limits
-    CHANNEL_SYNC_URLS: str = ""  # Comma-separated YouTube channel /videos URLs for recurring discovery
+    CHANNEL_SYNC_URLS: str = "https://www.youtube.com/@AsmonTV/videos,https://www.youtube.com/@AsmongoldClips/videos"  # Comma-separated YouTube channel /videos URLs for recurring discovery
     CHANNEL_SYNC_INTERVAL_SECONDS: int = Field(default=6 * 60 * 60, ge=60, le=24 * 60 * 60)
 
     # Backup and disaster recovery configuration
@@ -209,18 +209,14 @@ class Settings(BaseSettings):
 
     # Advanced transcription features
     # Language detection (uses Whisper's built-in capability)
-    WHISPER_LANGUAGE: str = "en"  # HasanAbi archive audio is English; avoids music-driven language misdetection
+    WHISPER_LANGUAGE: str = "en"  # Asmongold archive audio is English; avoids music-driven language misdetection
     # Quality presets: fast, balanced, accurate
     WHISPER_QUALITY_PRESET: str = "balanced"  # Default quality preset
     WHISPER_BEAM_SIZE: int = 5  # Beam size for decoding (1-10, higher = more accurate but slower)
     WHISPER_TEMPERATURE: float = 0.0  # Temperature for sampling (0.0-1.0, 0.0 = greedy)
     WHISPER_VAD_FILTER: bool = True  # Skip music/silence before decoding with faster-whisper
     WHISPER_WORD_TIMESTAMPS: bool = True  # Extract word-level timestamps
-    WHISPER_INITIAL_PROMPT: str = (
-        "What's going on, everybody? I hope everyone's having a fantastic evening, afternoon, pre-noon, "
-        "no matter where you are in the world. I'm Hasan Piker, and this is the HasanAbi broadcast. "
-        "All the boys, girls and Enbies. Hasan HasanAbi Piker. Oliver Larkin. Melat Kiros."
-    )
+    WHISPER_INITIAL_PROMPT: str = "Asmongold. Asmon. World of Warcraft. Gaming, reactions, and commentary."
     # Speaker diarization assigns anonymous labels like "Speaker 1"/"Speaker 2".
     # It does not identify real people without a separate voice-enrollment system.
     ENABLE_DIARIZATION: bool = False

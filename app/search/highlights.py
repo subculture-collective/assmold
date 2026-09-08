@@ -19,8 +19,8 @@ class HighlightRange(TypedDict):
 # Private-use code points plus a long application-specific token make accidental
 # collisions with transcript text vanishingly unlikely.  The values contain no
 # HTML metacharacters, so even an unexpected parser failure cannot create markup.
-HIGHLIGHT_START = "\ue000hasanara-search-5d8f3b9a-start\ue001"
-HIGHLIGHT_END = "\ue000hasanara-search-5d8f3b9a-end\ue001"
+HIGHLIGHT_START = "\ue000assmold-search-5d8f3b9a-start\ue001"
+HIGHLIGHT_END = "\ue000assmold-search-5d8f3b9a-end\ue001"
 
 POSTGRES_HEADLINE_OPTIONS = f"StartSel={HIGHLIGHT_START}, StopSel={HIGHLIGHT_END}"
 

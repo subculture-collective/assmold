@@ -37,10 +37,10 @@ export default function StreamFiltersBar({
             <p className="mb-1 text-sm font-medium uppercase tracking-[0.24em] text-subtle">
               VOD library
             </p>
-            <h1 className="page-title">Browse HasanAbi VODs</h1>
+            <h1 className="page-title">Browse Asmongold VODs</h1>
           </div>
           <p className="max-w-2xl text-muted">
-            Search the HasanAbi archive and narrow by broadcast date.
+            Search the Asmongold archive and narrow by broadcast date.
           </p>
         </div>
 

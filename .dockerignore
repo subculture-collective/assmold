@@ -134,3 +134,5 @@ openai_whisper-*.tar.gz
 # Additional Python artifacts
 .hypothesis/
 .benchmarks/
+
+runtime/

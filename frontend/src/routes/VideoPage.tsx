@@ -220,7 +220,7 @@ export default function VideoPage() {
 
   useEffect(() => {
     if (!video) return;
-    document.title = `${formatVideoTitle(video.title, video.uploaded_at)} | HasanAra`;
+    document.title = `${formatVideoTitle(video.title, video.uploaded_at)} | assmold`;
   }, [video]);
 
   useEffect(() => {
@@ -660,7 +660,7 @@ export default function VideoPage() {
 
   useEffect(() => {
     if (!video) return;
-    document.title = `${episodeTitle} | HasanAra`;
+    document.title = `${episodeTitle} | assmold`;
   }, [episodeTitle, video]);
 
   function selectChapter(chapter: VideoChapter) {
@@ -712,7 +712,7 @@ export default function VideoPage() {
                 type="button"
                 className="btn-secondary"
                 onClick={() => {
-                  const key = 'hasanara:saved-episodes';
+                  const key = 'assmold:saved-episodes';
                   const saved = new Set<string>(JSON.parse(localStorage.getItem(key) ?? '[]'));
                   saved.add(video.id);
                   localStorage.setItem(key, JSON.stringify([...saved]));

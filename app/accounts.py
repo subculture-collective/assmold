@@ -53,7 +53,7 @@ class FinalAdminError(AppError):
         super().__init__("final_admin", "At least one active admin must remain", 409)
 
 
-ADMIN_ROLE_MUTATION_LOCK = "hasanara:admin-role-mutation"
+ADMIN_ROLE_MUTATION_LOCK = "assmold:admin-role-mutation"
 _prepared_deletions: set[object] = set()
 
 

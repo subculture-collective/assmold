@@ -214,9 +214,8 @@ TITLE_PERSON_STOPWORDS = {
     "ALT",
     "CNN",
     "DELETED VOD",
-    "Hasan",
-    "HasanAbi",
-    "Hasan Piker",
+    "Asmon",
+    "Asmongold",
     "Instagram Stories Compilation",
     "LIVE",
     "VOD",
@@ -268,7 +267,7 @@ def infer_person_title_role(title: str, matched_alias: str) -> str:
     # Some curated aliases include the disambiguating verb (for example,
     # "Austin calls"). Treat that as phone presence. Do not treat a generic
     # ``PERSON calls SUBJECT ...`` construction as presence: political titles
-    # such as "Jake Tapper calls Hasan antisemitic" use ``calls`` as speech.
+    # such as "Jake Tapper calls Asmon antisemitic" use ``calls`` as speech.
     if (
         re.search(r"\b(?:calls?|calling|calls in)$", normalized_match)
         or re.search(r"(?:call in|call with|on the phone with)\s*$", before)
@@ -364,7 +363,7 @@ def _title_candidate_text(title: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
-    text = re.sub(r"\b(?:HasanAbi|Hasan Piker|Hasan)\b", " ", text)
+    text = re.sub(r"\b(?:Asmongold|Asmon)\b", " ", text)
     return text
 
 

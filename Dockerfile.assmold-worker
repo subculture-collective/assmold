@@ -1,0 +1,6 @@
+FROM git.subcult.tv/subculture-collective/hasanara-ingest-cuda@sha256:cc470ca4d7e2b8fa1b555cee3dd039842fb52ded0fc3009ee11c01cd67d7843a
+ARG GIT_COMMIT=unknown
+ENV GIT_COMMIT=${GIT_COMMIT}
+COPY app /app/app
+COPY worker /app/worker
+RUN python3 -m compileall -q /app/app /app/worker

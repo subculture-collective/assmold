@@ -1072,7 +1072,7 @@ export interface paths {
     };
     /**
      * Get archive summary
-     * @description Summary statistics for HasanAra based on real VOD and transcript data.
+     * @description Summary statistics for assmold based on real VOD and transcript data.
      */
     get: operations['archive_summary_archive_summary_get'];
     put?: never;
@@ -3215,7 +3215,7 @@ export interface components {
       /**
        * Creator Name
        * @description Archive display name
-       * @default HasanAra
+       * @default assmold
        */
       creator_name: string;
       /**

@@ -32,18 +32,18 @@ export function PrivacyPage() {
       <h2>What works without an account</h2>
       <p>
         You can search, browse transcripts, open timelines, and follow source links without signing
-        in. HasanAra records limited operational logs and aggregate usage events needed to secure,
+        in. assmold records limited operational logs and aggregate usage events needed to secure,
         maintain, and improve the service.
       </p>
       <h2>Accounts and saved material</h2>
       <p>
-        If you sign in with Google or Twitch, HasanAra receives the identity details that provider
+        If you sign in with Google or Twitch, assmold receives the identity details that provider
         shares, such as a provider identifier, display name, email address, and avatar. Saved
         searches, moments, and account preferences are stored so they can be synchronized.
       </p>
       <h2>Donations</h2>
       <p>
-        Stripe receives payment information when you use its hosted donation page. HasanAra does not
+        Stripe receives payment information when you use its hosted donation page. assmold does not
         collect or store complete card numbers. Stripe may share transaction identifiers, payment
         status, amount, contact details, and fraud-prevention signals needed to administer the
         contribution.
@@ -51,7 +51,7 @@ export function PrivacyPage() {
       <h2>Your choices</h2>
       <p>
         You can browse anonymously, revoke sessions, unlink supported identity providers, and delete
-        your HasanAra account from the account page. Payment records may be retained where required
+        your assmold account from the account page. Payment records may be retained where required
         for accounting, fraud prevention, or legal compliance.
       </p>
       <p>
@@ -70,7 +70,7 @@ export function TermsPage() {
     <PolicyPage eyebrow="Project policy" title="Terms" updated="September 1, 2026">
       <h2>Use of the archive</h2>
       <p>
-        HasanAra is provided for research, discovery, commentary, and citation. Do not use the
+        assmold is provided for research, discovery, commentary, and citation. Do not use the
         service to harass people, evade access controls, overload infrastructure, or misrepresent
         generated transcripts as infallible quotations.
       </p>

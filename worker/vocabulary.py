@@ -12,36 +12,9 @@ from app.logging_config import get_logger
 logger = get_logger(__name__)
 
 
-# Corrections that are specific to the HasanAbi archive and safe to apply to
-# every native transcript. Keep ambiguous terms inside their recurring phrase
-# so ordinary uses (for example, "MPs") retain their original meaning.
-ARCHIVE_VOCABULARY: Dict[str, Any] = {
-    "terms": [
-        {"pattern": r"pre[- ]new", "replacement": "pre-noon", "case_sensitive": False},
-        {
-            "pattern": r"I(?:'m| am) a Sompike(?:r)?",
-            "replacement": "I'm Hasan Piker",
-            "case_sensitive": False,
-        },
-        {
-            "pattern": r"thoughts and I(?:'m| am)",
-            "replacement": "is the HasanAbi",
-            "case_sensitive": False,
-        },
-        {
-            "pattern": r"boys,\s+girls and MPs",
-            "replacement": "boys, girls and Enbies",
-            "case_sensitive": False,
-        },
-        {
-            "pattern": r"Hassan(?:\s+Hassan)?\s+Habib Piker",
-            "replacement": "Hasan HasanAbi Piker",
-            "case_sensitive": False,
-        },
-        {"pattern": r"Oliver Largan", "replacement": "Oliver Larkin", "case_sensitive": False},
-        {"pattern": r"Amela Keros", "replacement": "Melat Kiros", "case_sensitive": False},
-    ]
-}
+# No automatic creator-name rewrites: preserve what was actually transcribed.
+# Operators may supply explicit vocabulary files when corrections are validated.
+ARCHIVE_VOCABULARY: Dict[str, Any] = {"terms": []}
 
 
 class VocabularyProcessor:

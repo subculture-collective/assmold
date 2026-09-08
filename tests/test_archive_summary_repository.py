@@ -2,7 +2,6 @@
 
 import json
 import uuid
-from collections import Counter
 from contextlib import nullcontext
 from datetime import date, datetime, timezone
 from types import MappingProxyType
@@ -11,7 +10,6 @@ from sqlalchemy.exc import ProgrammingError
 
 from app import crud
 from app.archive.intelligence_repository import (
-    RETIRED_NAMED_PERIOD_SLUGS,
     SEED_TOPICS,
     _month_bounds,
     _period_intelligence_from_row,
@@ -237,7 +235,7 @@ def test_get_summary_uses_cached_stats_when_available():
                 "uploaded_at": datetime(2026, 6, 1, tzinfo=timezone.utc),
                 "created_at": datetime(2026, 6, 1, tzinfo=timezone.utc),
                 "updated_at": datetime(2026, 6, 1, tzinfo=timezone.utc),
-                "channel_name": "HasanAbi",
+                "channel_name": "Asmongold",
                 "language": "en",
                 "category": None,
                 "has_whisper_transcript": False,
@@ -254,7 +252,7 @@ def test_get_summary_uses_cached_stats_when_available():
                 "uploaded_at": datetime(2026, 6, 2, tzinfo=timezone.utc),
                 "created_at": datetime(2026, 6, 2, tzinfo=timezone.utc),
                 "updated_at": datetime(2026, 6, 2, tzinfo=timezone.utc),
-                "channel_name": "HasanAbi",
+                "channel_name": "Asmongold",
                 "language": "en",
                 "category": None,
                 "has_whisper_transcript": False,
@@ -366,64 +364,14 @@ def test_seed_archive_topics_uses_publishable_defaults():
     assert any("INSERT INTO archive_topic_aliases" in sql for sql, _ in db.calls)
 
 
-def test_seed_named_periods_corrects_current_curated_windows(monkeypatch):
-    monkeypatch.setattr("app.archive.intelligence_repository._seed_today", lambda: date(2026, 11, 10))
-
+def test_empty_archive_has_no_inherited_editorial_periods():
     db = _SeedDb()
-
     seed_named_periods(db)
-
     by_slug = {row["slug"]: row for row in db.inserted_periods}
-    kind_counts = Counter(row["kind"] for row in by_slug.values())
-    retired_update_slugs = {
-        params["slug"] for sql, params in db.calls if "UPDATE archive_named_periods" in sql and "slug = :slug" in sql
-    }
-    retired_update_patterns = {
-        params["pattern"]
-        for sql, params in db.calls
-        if "UPDATE archive_named_periods" in sql and "slug ~ :pattern" in sql
-    }
-
-    assert retired_update_slugs == set(RETIRED_NAMED_PERIOD_SLUGS)
-    assert r"^[0-9]{4}-august-21$" in retired_update_patterns
-    assert "october-7-leadup" not in by_slug
-    assert by_slug["russia-ukraine-invasion-leadup"]["kind"] == "leadup"
-    assert str(by_slug["russia-ukraine-invasion-leadup"]["date_from"]) == "2021-11-01"
-    assert str(by_slug["russia-ukraine-invasion-leadup"]["date_to"]) == "2022-02-23"
-    assert by_slug["russia-ukraine-invasion"]["kind"] == "event"
-    assert str(by_slug["russia-ukraine-invasion"]["date_from"]) == "2022-02-24"
-    assert by_slug["russia-ukraine-invasion-fallout"]["kind"] == "fallout"
-    assert str(by_slug["russia-ukraine-invasion-fallout"]["date_to"]) == "2022-12-31"
-    assert by_slug["2026-midterms-leadup"]["kind"] == "leadup"
-    assert str(by_slug["2026-midterms-leadup"]["date_from"]) == "2026-11-03"
-    assert str(by_slug["2026-midterms-leadup"]["date_to"]) == "2026-11-03"
-    assert "2024-august-21" not in by_slug
-    assert "2025-august-21" not in by_slug
-    assert by_slug["august-21"]["kind"] == "anniversary"
-    assert by_slug["august-21"]["recurring_month"] == 8
-    assert by_slug["august-21"]["recurring_day"] == 21
-    assert by_slug["christmas"]["kind"] == "holiday"
-    assert by_slug["christmas"]["recurring_month"] == 12
-    assert by_slug["christmas"]["recurring_day"] == 25
-    assert by_slug["new-year"]["kind"] == "holiday"
-    assert by_slug["new-year"]["recurring_month"] == 1
-    assert by_slug["new-year"]["recurring_day"] == 1
-    assert by_slug["may-day"]["kind"] == "holiday"
-    assert by_slug["may-day"]["recurring_month"] == 5
-    assert by_slug["may-day"]["recurring_day"] == 1
-    assert kind_counts["event"] >= 10
-    assert kind_counts["leadup"] >= 5
-    assert kind_counts["fallout"] >= 5
-    assert kind_counts["holiday"] >= 8
-    assert kind_counts["anniversary"] >= 8
-    assert kind_counts["date"] >= 5
-    assert by_slug["january-6-capitol-attack"]["kind"] == "event"
-    assert by_slug["gamestop-saga"]["kind"] == "event"
-    assert by_slug["dobbs-leadup"]["kind"] == "leadup"
-    assert by_slug["2022-midterms-fallout"]["kind"] == "fallout"
-    assert by_slug["juneteenth"]["recurring_month"] == 6
-    assert by_slug["october-7-anniversary"]["recurring_day"] == 7
-    assert by_slug["2024-election-day"]["kind"] == "date"
+    assert by_slug == {}
+    assert all(row["kind"] in {"month", "week"} for row in by_slug.values())
+    assert "2026-midterms-leadup" not in by_slug
+    assert "august-21" not in by_slug
 
 
 def test_refresh_named_period_stats_includes_metadata_in_public_payloads():
@@ -488,7 +436,7 @@ def test_refresh_named_period_stats_includes_metadata_in_public_payloads():
                             "uploaded_at": datetime(2026, 5, 10, tzinfo=timezone.utc),
                             "created_at": datetime(2026, 5, 10, tzinfo=timezone.utc),
                             "updated_at": datetime(2026, 5, 10, tzinfo=timezone.utc),
-                            "channel_name": "HasanAbi",
+                            "channel_name": "Asmongold",
                             "language": "en",
                             "category": None,
                             "has_whisper_transcript": True,
@@ -521,7 +469,7 @@ def test_refresh_named_period_stats_includes_metadata_in_public_payloads():
                             "uploaded_at": datetime(2026, 5, 10, tzinfo=timezone.utc),
                             "created_at": datetime(2026, 5, 10, tzinfo=timezone.utc),
                             "updated_at": datetime(2026, 5, 10, tzinfo=timezone.utc),
-                            "channel_name": "HasanAbi",
+                            "channel_name": "Asmongold",
                             "language": "en",
                             "category": None,
                             "segment_id": uuid.uuid4(),
@@ -687,7 +635,7 @@ def test_refresh_topic_mentions_uses_youtube_caption_segments():
                             "uploaded_at": datetime(2026, 1, 1, tzinfo=timezone.utc),
                             "created_at": datetime(2026, 1, 1, tzinfo=timezone.utc),
                             "updated_at": datetime(2026, 1, 1, tzinfo=timezone.utc),
-                            "channel_name": "HasanAbi",
+                            "channel_name": "Asmongold",
                             "language": "en",
                             "category": None,
                             "has_whisper_transcript": False,
