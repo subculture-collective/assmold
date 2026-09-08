@@ -6,7 +6,8 @@ COPY frontend/package*.json ./
 RUN npm ci
 
 COPY frontend/ ./
-ENV VITE_API_BASE=/api
+ARG VITE_AUTH_ENABLED=true
+ENV VITE_API_BASE=/api VITE_AUTH_ENABLED=${VITE_AUTH_ENABLED}
 RUN npm run build
 
 FROM nginx:1.27-alpine

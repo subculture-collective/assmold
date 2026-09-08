@@ -191,7 +191,7 @@ export default function HomePage() {
       )}
 
       <section className="archive-section">
-        {!authLoading && !user ? (
+        {!authLoading && !user && import.meta.env.VITE_AUTH_ENABLED !== 'false' ? (
           <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
             <div>
               <div className="archive-eyebrow">Save your archive trail</div>

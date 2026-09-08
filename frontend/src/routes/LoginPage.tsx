@@ -2,6 +2,9 @@ import { useAuth } from '../services';
 
 export default function LoginPage() {
   const { login, loginTwitch, status, error } = useAuth();
+  if (import.meta.env.VITE_AUTH_ENABLED === 'false') {
+    return <p className="text-muted">Sign-in is not available yet. You can browse and search the archive without an account.</p>;
+  }
   return (
     <div className="mx-auto max-w-sm space-y-5">
       <h1 className="page-title">Sign in</h1>

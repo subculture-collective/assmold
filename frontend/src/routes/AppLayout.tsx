@@ -281,7 +281,7 @@ export default function AppLayout() {
                     Logout
                   </button>
                 </>
-              ) : (
+              ) : import.meta.env.VITE_AUTH_ENABLED === 'false' ? null : (
                 <>
                   <button type="button" onClick={login} className="nav-link">
                     Google
@@ -436,7 +436,7 @@ export default function AppLayout() {
                       Logout
                     </button>
                   </>
-                ) : (
+                ) : import.meta.env.VITE_AUTH_ENABLED === 'false' ? null : (
                   <>
                     <button
                       type="button"

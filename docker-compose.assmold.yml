@@ -85,6 +85,8 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
+      args:
+        VITE_AUTH_ENABLED: 'false'
     container_name: assmold-web
     networks: [management]
     restart: unless-stopped
@@ -109,6 +111,7 @@ services:
       <<: *environment
       CHANNEL_SYNC_URLS: https://www.youtube.com/@AsmonTV/videos,https://www.youtube.com/@AsmongoldClips/videos
       CHANNEL_SYNC_INTERVAL_SECONDS: '21600'
+      YTDLP_REQUEST_TIMEOUT: '1800'
       MAX_PARALLEL_JOBS: '1'
       WHISPER_MODEL: small
       FORCE_GPU: 'false'
