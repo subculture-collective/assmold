@@ -32,6 +32,9 @@ services:
     volumes: [semantic-state:/data]
     command: ['python3', '-m', 'semantic.indexer']
     stop_grace_period: 120s
+    healthcheck:
+      test: ['CMD', 'python3', '-c', 'from pathlib import Path; import sys; sys.exit(Path("/data/paused").exists())']
+      interval: 30s
     restart: unless-stopped
     cpus: 0.75
     mem_limit: 512m
@@ -45,6 +48,9 @@ services:
     restart: unless-stopped
     cpus: 1
     mem_limit: 1g
+    stop_grace_period: 300s
+    healthcheck:
+      disable: true
     profiles: [enrichment]
 volumes:
   semantic-vectors:
