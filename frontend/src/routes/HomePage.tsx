@@ -93,7 +93,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="basement-sticker" aria-hidden="true">
-          <img src="/icon.svg" alt="" />
+          <img src="/icon.svg?v=rot-1" alt="" />
           <span>
             UNBRUSHED.
             <br />

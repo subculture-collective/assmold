@@ -107,3 +107,21 @@ for personal or medical claims.
 The overhaul changes shared appearance and brand copy while retaining archive
 search, compact dates, source links, timestamps, transcripts and account behavior.
 It does not modify ingestion, database records or worker deployment.
+
+## Deployment
+
+Almaz runtime: `/mnt/spektr/server/projects/assmold`.
+Frontend-only Compose override: `releases/rot-design/frontend-release.json`.
+Use it together with `docker-compose.assmold.yml` and `.env.assmold` when
+recreating the frontend. `frontend-rollback.json` in the same release directory
+selects `assmold-frontend:before-rot-design` (the pre-overhaul image).
+Other services retain their existing container identities. No source is pushed
+to the inherited upstream remote.
+
+The logo and social-card URLs include `?v=rot-1`: live verification found a cached
+pre-overhaul icon at the unversioned CDN URL. Change the version on future edits.
+
+Validation: 267 frontend tests passed, one skipped; production build and lint
+passed. Browser checks cover desktop and 390px mobile layouts, dark/light themes,
+reference interactions, real archive search, and horizontal overflow. Production
+checks include health and matching hero/grime/roach bytes from the public origin.

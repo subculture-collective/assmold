@@ -21,7 +21,7 @@ export default function DesignSystemPage() {
     <div className="rot-system">
       <header className="rot-system-cover rot-paper">
         <div className="archive-eyebrow">ASSMOLD / DESIGN SYSTEM / VOL. 01</div>
-        <img src="/icon.svg" alt="" className="rot-system-teeth" />
+        <img src="/icon.svg?v=rot-1" alt="" className="rot-system-teeth" />
         <h1>
           THE ROT
           <br />

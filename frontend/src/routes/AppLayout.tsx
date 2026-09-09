@@ -185,7 +185,7 @@ export default function AppLayout() {
               aria-label="Home - assmold"
             >
               <img
-                src="/icon.svg"
+                src="/icon.svg?v=rot-1"
                 alt=""
                 width="40"
                 height="40"
