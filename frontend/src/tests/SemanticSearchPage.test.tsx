@@ -58,4 +58,46 @@ describe('meaning search', () => {
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
     expect(screen.queryByText(/No matching passages/)).toBeNull();
   });
+  it('investigates an indexed ID and preserves disconfirming findings and source quotes', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockResolvedValueOnce({ ok: true, json: async () => ({ items, indexed_videos: 20 }) })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            anchor: items[0],
+            claim: 'The claim in the source',
+            queries: ['neutral', 'opposing', 'exceptions'],
+            candidates_checked: 12,
+            indexed_videos: 20,
+            assessments: [
+              {
+                statement: items[1],
+                relation: 'different_context',
+                anchor_quote: items[0].text,
+                counter_quote: items[1].text,
+                explanation: 'Different circumstances apply.',
+                alternative: 'The second passage concerns a different rule.',
+                verification: 'Verify the speakers in both videos.',
+              },
+            ],
+          }),
+        })
+    );
+    render(
+      <MemoryRouter initialEntries={['/semantic?q=gaming']}>
+        <SemanticSearchPage />
+      </MemoryRouter>
+    );
+    fireEvent.click((await screen.findAllByRole('button', { name: 'Find counterstatements' }))[0]);
+    expect(await screen.findByText('Different context')).toBeInTheDocument();
+    expect(vi.mocked(fetch).mock.calls[1][1]?.body).toBe(JSON.stringify({ anchor_id: 'p0' }));
+    expect(screen.getByText('Verify the speakers in both videos.')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Compare full passages' }));
+    expect(screen.getByRole('region', { name: 'Compare statements' })).toHaveTextContent(
+      'Source statement 1'
+    );
+  });
 });

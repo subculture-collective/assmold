@@ -101,3 +101,39 @@ interrupted. Provider completion/cost is unknown. The run is retained as cancell
 with uncertainty metadata, and its job is parked without automatic retry. Queue
 maintenance recovery `57ac0c58-ba8b-4145-a28e-df382f2e1c61` resumed other work.
 Eleven continuous jobs had completed before that recovery.
+
+## Counterstatement investigations
+
+Select **Find counterstatements** on a semantic result. The server loads the
+indexed passage by UUID; clients cannot supply invented captions. DeepSeek V4 Pro
+isolates a claim and generates three same-issue searches: neutral, opposing, and
+exception/change-of-mind. Vector results are merged with reciprocal-rank fusion.
+Overlapping anchor windows and near-identical reuploads are excluded; at most two
+passages per video enter a twelve-passage shortlist.
+
+The assessment can return possible contradiction, changed position, different
+context, consistent position, or unclear. It must consider the strongest alternate
+explanation and give specific verification steps. Quotes are validated as exact
+contiguous caption excerpts with whitespace normalization; unknown IDs or fabricated
+quotes are rejected. These checks establish caption provenance, not truthful
+speaker attribution or model reasoning. Upload dates are not recording dates.
+Results are explicitly AI assessments and are never published as verified claims.
+
+Investigations search all indexed dates; the ordinary search date range selects
+an anchor only. The UI shows search angles, checked-candidate count, source links,
+alternate explanations, and full-passage comparison. Empty results are not proof
+that no contradiction exists. Retrieval is bounded and has no corpus-wide recall
+benchmark yet; this is not an exhaustive audit of the channel.
+
+`POST /api/semantic/investigate` accepts only `anchor_id`. One global paid lane,
+30 uncached investigations/hour, six-hour caching (refreshed as coverage grows),
+bounded prompts/completions and no automatic provider retry constrain public
+abuse. This is an endpoint throttle, not a spending-budget change. Paid chapter
+processing and semantic backfill retain their existing settings. Tokens are tracked
+in Redis; provider billing remains authoritative for cost.
+
+Semantic API image: `assmold-semantic:counterstatements-20260909`. The indexer stays
+on `20260909-v4`. Pre-change intelligence override is saved under
+`releases/counterstatements-20260909/intelligence-rollback.yml`; copy it back to the
+project root before using it, because env-file paths are relative to the compose
+file location. Recreate only `semantic`, never whole-project down.

@@ -8,7 +8,7 @@ services:
     cpus: 1
     mem_limit: 2g
   semantic:
-    image: assmold-semantic:20260909-v4
+    image: assmold-semantic:counterstatements-20260909
     container_name: assmold-semantic
     env_file: ./releases/enrichment-20260909/.env.enrichment
     environment:
