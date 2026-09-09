@@ -61,6 +61,7 @@ export default function SemanticSearchPage() {
   const [investigation, setInvestigation] = useState<Investigation | null>(null);
   const [investigationError, setInvestigationError] = useState('');
   const [investigating, setInvestigating] = useState(false);
+  const comparisonSection = useRef<HTMLElement | null>(null);
   const investigationSection = useRef<HTMLElement | null>(null);
   const investigationController = useRef<AbortController | null>(null);
   useEffect(() => () => investigationController.current?.abort(), []);
@@ -269,6 +270,11 @@ export default function SemanticSearchPage() {
               AI assessment · {investigation.candidates_checked} candidate passages checked ·{' '}
               {investigation.indexed_videos} indexed videos
             </p>
+            <p className="text-xl font-bold">
+              {investigation.assessments.some((row) => row.relation === 'possible_contradiction')
+                ? 'Possible contradictions to verify below.'
+                : 'No contradiction lead survived these checks.'}
+            </p>
             <p>
               <strong>Claim being investigated:</strong>{' '}
               {investigation.claim || 'No clear claim could be isolated from this passage.'}
@@ -326,7 +332,12 @@ export default function SemanticSearchPage() {
                 </p>
                 <button
                   className="btn-secondary mt-4"
-                  onClick={() => setSelected([investigation.anchor, assessment.statement])}
+                  onClick={() => {
+                    setSelected([investigation.anchor, assessment.statement]);
+                    requestAnimationFrame(() =>
+                      comparisonSection.current?.scrollIntoView?.({ block: 'start' })
+                    );
+                  }}
                 >
                   Compare full passages
                 </button>
@@ -336,7 +347,11 @@ export default function SemanticSearchPage() {
         )}
       </section>
       {selected.length > 0 && (
-        <section className="archive-section" aria-label="Compare statements">
+        <section
+          ref={comparisonSection}
+          className="archive-section scroll-mt-24"
+          aria-label="Compare statements"
+        >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-3xl">Then. Now. Compare.</h2>
             <button className="btn-secondary" onClick={() => setSelected([])}>
