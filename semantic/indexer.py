@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import signal
 import sqlite3
 import time
 from pathlib import Path
@@ -18,6 +19,16 @@ from semantic.core import COLLECTION, DIMENSIONS, embed, point_id, qdrant, windo
 def run():
     directory = Path(os.environ.get("SEMANTIC_STATE_DIR", "/data"))
     directory.mkdir(exist_ok=True)
+    stopping = False
+
+    def stop(*_):
+        nonlocal stopping
+        stopping = True
+
+    signal.signal(signal.SIGTERM, stop)
+    signal.signal(signal.SIGINT, stop)
+    if (directory / "inflight").exists():
+        (directory / "paused").write_text("interrupted indexing operation; inspect before resuming\n")
     state = sqlite3.connect(directory / "indexed.sqlite")
     state.execute("CREATE TABLE IF NOT EXISTS indexed (transcript_id text primary key, video_id text not null)")
     cache = redis.Redis.from_url(os.environ["REDIS_URL"], decode_responses=True)
@@ -48,7 +59,7 @@ def run():
         raise RuntimeError("vector store unavailable")
     for (video_id,) in state.execute("SELECT DISTINCT video_id FROM indexed"):
         cache.sadd("semantic:indexed-videos", video_id)
-    while True:
+    while not stopping:
         if (directory / "paused").exists():
             cache.set("semantic:worker-state", "paused")
             time.sleep(30)
@@ -83,7 +94,8 @@ def run():
                 :24
             ]
             base = {k: r[k] or "" for k in ["video_id", "youtube_id", "title", "channel_name"]}
-            base["uploaded_at"] = r["uploaded_at"].isoformat() if r["uploaded_at"] else "1970-01-01T00:00:00+00:00"
+            base["uploaded_at"] = r["uploaded_at"].isoformat() if r["uploaded_at"] else None
+            (directory / "inflight").write_text(r["video_id"])
             token_total = 0
             for offset in range(0, len(chunks), 16):
                 batch = chunks[offset : offset + 16]
@@ -122,6 +134,7 @@ def run():
             )
             state.execute("INSERT OR REPLACE INTO indexed VALUES (?,?)", (r["transcript_id"], r["video_id"]))
             state.commit()
+            (directory / "inflight").unlink(missing_ok=True)
             cache.sadd("semantic:indexed-videos", r["video_id"])
             print(
                 json.dumps(

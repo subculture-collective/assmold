@@ -28,11 +28,13 @@ This supplements the original indexed search; it does not replace it or claim
 that the original search already used query-time vectors. No automated
 contradiction classification or verified speaker diarization is claimed.
 
+Unknown upload dates remain null and display as Date unavailable. Known upload days are rendered in UTC to preserve source chronology.
+
 Provider vectors are validated for order, count, dimensions and finite values.
 Query vectors are cached for seven days. A global 120-request/minute limit and
 per-query locks protect public provider calls. Provider errors become retryable
 503 responses rather than false empty results. Indexing failures write a durable
-pause file; restarts do not replay uncertain paid requests. Inspect the error
+pause file; an in-flight marker also pauses on interrupted indexing. SIGTERM drains the current video when possible; restarts do not blindly replay uncertain paid requests. Inspect the error
 before explicitly clearing that pause. Token counts are retained in Redis;
 OpenRouter billing remains the authority for embedding costs.
 

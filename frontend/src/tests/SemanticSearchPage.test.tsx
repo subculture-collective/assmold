@@ -9,7 +9,7 @@ const items = [0, 1].map((i) => ({
   youtube_id: `y${i}`,
   title: `Statement video ${i}`,
   channel_name: 'AsmonTV',
-  uploaded_at: `202${i + 4}-01-01T00:00:00Z`,
+  uploaded_at: i === 1 ? null : `202${i + 4}-01-01T00:00:00Z`,
   start_ms: 12000,
   end_ms: 42000,
   text: `Source statement ${i}`,
@@ -34,6 +34,9 @@ describe('meaning search', () => {
       'Source statement 0'
     );
     expect(screen.getAllByRole('link', { name: 'Watch at 0:12' })).toHaveLength(2);
+    expect(screen.getByRole('region', { name: 'Compare statements' })).toHaveTextContent(
+      'Date unavailable'
+    );
     expect(vi.mocked(fetch).mock.calls[0][0]).toContain('date_from=2024-01-01');
     fireEvent.click(screen.getByRole('button', { name: 'Clear comparison' }));
     expect(screen.queryByRole('region', { name: 'Compare statements' })).toBeNull();

@@ -8,7 +8,7 @@ services:
     cpus: 1
     mem_limit: 2g
   semantic:
-    image: assmold-semantic:20260909-v2
+    image: assmold-semantic:20260909-v4
     container_name: assmold-semantic
     env_file: ./releases/enrichment-20260909/.env.enrichment
     environment:
@@ -24,13 +24,14 @@ services:
       timeout: 10s
       retries: 3
   semantic-indexer:
-    image: assmold-semantic:20260909-v2
+    image: assmold-semantic:20260909-v4
     env_file: ./releases/enrichment-20260909/.env.enrichment
     environment:
       QDRANT_URL: http://assmold-vectors:6333
       SEMANTIC_STATE_DIR: /data
     volumes: [semantic-state:/data]
     command: ['python3', '-m', 'semantic.indexer']
+    stop_grace_period: 120s
     restart: unless-stopped
     cpus: 0.75
     mem_limit: 512m

@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { formatDate } from '../features/archive/format';
+const sourceDate = (value: string | null) =>
+  value
+    ? new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeZone: 'UTC' }).format(
+        new Date(value)
+      )
+    : 'Date unavailable';
 
 type Statement = {
   id: string;
@@ -8,7 +13,7 @@ type Statement = {
   youtube_id: string;
   title: string;
   channel_name: string;
-  uploaded_at: string;
+  uploaded_at: string | null;
   start_ms: number;
   end_ms: number;
   text: string;
@@ -166,7 +171,7 @@ export default function SemanticSearchPage() {
             {selected.map((item, i) => (
               <article key={item.id} className="rot-receipt p-5">
                 <span className="meta-label">
-                  Statement {i + 1} · {formatDate(item.uploaded_at)}
+                  Statement {i + 1} · {sourceDate(item.uploaded_at)}
                 </span>
                 <h3 className="mt-3 text-xl">{item.title}</h3>
                 <blockquote className="my-4 max-h-80 overflow-y-auto whitespace-pre-wrap leading-7">
@@ -216,7 +221,7 @@ export default function SemanticSearchPage() {
           <article className="archive-section" key={item.id}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="meta-label">
-                {item.channel_name} · {formatDate(item.uploaded_at)} · {time(item.start_ms)}
+                {item.channel_name} · {sourceDate(item.uploaded_at)} · {time(item.start_ms)}
               </span>
               <button
                 className="btn-secondary"
