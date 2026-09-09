@@ -211,12 +211,12 @@ export default function DesignSystemPage() {
         </div>
         <img
           className="rot-artwork"
-          src="/basement.webp"
-          alt="Fictional gaunt adult gamer in a stained shirt, seated in a decaying basement surrounded by empty food containers, crumpled tissues, a stained sock and cockroaches."
+          src="/basement-asmon.webp"
+          alt="Satirical caricature of Asmongold in a stained shirt, seated in a decaying basement surrounded by empty food containers, crumpled tissues, a stained sock and cockroaches."
           loading="lazy"
         />
         <p className="mt-4 text-sm text-muted">
-          Original fictional mascot artwork. Crop around the seated character; leave the dark wall
+          Original satirical Asmongold caricature. Crop around the seated character; leave the dark wall
           for type. Food containers, stained fabric and roaches supply the visual vocabulary.
         </p>
       </section>

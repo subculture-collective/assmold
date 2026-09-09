@@ -4,7 +4,7 @@ Live reference: `/design-system`. Product: `/`.
 
 A decaying basement surrounding a tool for finding contradictions: tar, nicotine,
 raw-gum red, mold green, grease-stained paper, crooked teeth, cheap tape, roaches,
-and hard offset shadows. The original fictional adult mascot supplies the hero
+and hard offset shadows. A satirical Asmongold caricature supplies the hero
 composition; the interface uses its materials throughout the archive.
 
 ## Foundations
@@ -140,3 +140,22 @@ The small abandoned cigarette in the footer is keyboard-operable. Clicking it
 triggers a fictional cartoon oxygen-tank/BOOM overlay for 3.2 seconds, then resets.
 The overlay is portaled to the document body, cannot block clicks, and uses a still
 BOOM panel under reduced motion. It contains no audio or rapid flashing.
+
+## Asmongold caricature replacement
+
+Current hero: `frontend/public/basement-asmon.webp`; the former generic-character
+asset remains preserved as `basement.webp`. The design reference labels the new
+art as satire and describes the depicted public figure in its alternative text.
+It is generated art, not a real photograph or a claim about an actual event.
+
+Built-in image-generation edit of the previous basement image, preserving the
+room, pose, clutter and left-side typography space. Prompt: replace the fictional
+man with a recognizable, fully clothed satirical Asmongold caricature: narrow
+face, receding hairline, long brown hair, thin mustache, short scruffy beard,
+prominent nose, slim build and expressive eyebrows. Keep the stained gray shirt,
+dark shorts, crooked-tooth grin and existing clutter; clearly stylized satire.
+Do not add explicit bodily fluids, nudity, sexual content or graphic injuries.
+
+Generated original:
+`/home/onnwee/.codex/generated_images/01a0831f-95bf-7ee0-9224-b6c0d94dbfd9/exec-9a161659-73da-4231-8f8a-070d9fe0d3b0.png`.
+WebP encoding: ImageMagick, quality 84. New asset URL avoids legacy CDN caching.
