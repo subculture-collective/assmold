@@ -32,19 +32,22 @@ def chat(instruction: str, evidence: dict, cache) -> dict:
         headers={"Authorization": "Bearer " + os.environ["OPENROUTER_API_KEY"]},
         json={
             "model": MODEL,
-            "max_tokens": 4000,
+            "max_tokens": 8000,
             "temperature": 0,
+            "reasoning": {"enabled": False, "exclude": True},
+            "provider": {"require_parameters": True, "data_collection": "deny"},
             "response_format": {"type": "json_object"},
             "messages": [
                 {"role": "system", "content": SYSTEM + instruction},
                 {"role": "user", "content": json.dumps(evidence)},
             ],
         },
-        timeout=150,
+        timeout=180,
     )
     if response.status_code != 200:
         raise RuntimeError("assessment provider unavailable")
     body = response.json()
+    cache.setex("semantic:assessment-last-finish", 86400, str(body.get("choices", [{}])[0].get("finish_reason")))
     cache.incrby("semantic:assessment-tokens", int(body.get("usage", {}).get("total_tokens", 0)))
     return json.loads(body["choices"][0]["message"]["content"])
 

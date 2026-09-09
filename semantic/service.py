@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import time
 from datetime import date
@@ -128,7 +129,8 @@ def counterstatements(request: InvestigationRequest):
         raise
     except redis.exceptions.LockError:
         raise HTTPException(429, "Another investigation is running. Try again in a few minutes.") from None
-    except Exception:
+    except Exception as error:
+        logging.getLogger(__name__).warning("investigation_failed error_type=%s", type(error).__name__)
         raise HTTPException(
             503, "The investigation could not finish. Your source passage is unchanged. You can try again."
         ) from None

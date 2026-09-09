@@ -132,7 +132,7 @@ abuse. This is an endpoint throttle, not a spending-budget change. Paid chapter
 processing and semantic backfill retain their existing settings. Tokens are tracked
 in Redis; provider billing remains authoritative for cost.
 
-Semantic API image: `assmold-semantic:counterstatements-20260909-v2`. The indexer stays
+Semantic API image: `assmold-semantic:counterstatements-20260909-v3`. The indexer stays
 on `20260909-v4`. Pre-change intelligence override is saved under
 `releases/counterstatements-20260909/intelligence-rollback.yml`; copy it back to the
 project root before using it, because env-file paths are relative to the compose
