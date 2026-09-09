@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigationType } from 'react-router-dom';
 import { useAuth, useTheme } from '../services';
+import { LightRoaches, CigaretteSurprise } from '../components/BasementEffects';
 
 const navItems = [
   { to: '/', label: 'The basement' },
@@ -21,7 +22,8 @@ const routeMeta: Array<{ match: RegExp; title: string; description: string }> = 
   {
     match: /^\/search/,
     title: 'Search transcripts — assmold',
-    description: 'Find timestamped, citation-backed moments across the archive.',
+    description:
+      'Find contradictions by searching statements, comparing dates, and checking source context.',
   },
   {
     match: /^\/explore/,
@@ -163,6 +165,7 @@ export default function AppLayout() {
   return (
     <div className="basement-shell flex min-h-screen flex-col bg-canvas text-ink transition-colors">
       <RouteTransitionManager />
+      <LightRoaches theme={theme} />
       <a
         href="#main-content"
         onClick={() =>
@@ -526,6 +529,7 @@ export default function AppLayout() {
             </Link>
           </nav>
         </div>
+        <CigaretteSurprise />
       </footer>
     </div>
   );

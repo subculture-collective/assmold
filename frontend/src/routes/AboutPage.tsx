@@ -16,8 +16,9 @@ export default function AboutPage() {
             <div className="archive-eyebrow">About assmold</div>
             <h1 className="archive-display">Welcome to the basement.</h1>
             <p className="max-w-3xl text-lg leading-8 text-muted sm:text-xl">
-              assmold indexes videos from AsmonTV and Asmongold Clips: searchable transcripts,
-              timestamped evidence, topic histories, and direct paths back to the original video.
+              assmold exists to find contradictions in Asmongold’s thoughts, positions, and
+              statements. Search AsmonTV and Asmongold Clips, compare what he said at different
+              times, and check each quote against the original video.
             </p>
             <div className="flex flex-wrap gap-4 text-sm font-semibold">
               <Link to="/search" className="action-link">

@@ -2,7 +2,7 @@
 
 Live reference: `/design-system`. Product: `/`.
 
-A decaying basement translated into a bootleg archive interface: tar, nicotine,
+A decaying basement surrounding a tool for finding contradictions: tar, nicotine,
 raw-gum red, mold green, grease-stained paper, crooked teeth, cheap tape, roaches,
 and hard offset shadows. The original fictional adult mascot supplies the hero
 composition; the interface uses its materials throughout the archive.
@@ -77,7 +77,7 @@ The roach moves briefly after a long pause. `prefers-reduced-motion: reduce`
 stops decorative movement. Texture never captures pointer events. Retain visible
 focus, real labels, readable transcript lines and clear recovery actions.
 
-Brand voice: “Nothing washed. Everything indexed.” / “Fresh out of the pile.” /
+Brand voice: “Find the contradiction. In his own words.” / “Fresh out of the pile.” /
 “Dig something up.” Error copy explains the failure and recovery; transcript
 content and source titles are not rewritten into brand jokes.
 
@@ -125,3 +125,18 @@ Validation: 267 frontend tests passed, one skipped; production build and lint
 passed. Browser checks cover desktop and 390px mobile layouts, dark/light themes,
 reference interactions, real archive search, and horizontal overflow. Production
 checks include health and matching hero/grime/roach bytes from the public origin.
+
+## Purpose and copy
+
+The existing visual treatments remain approved. Do not describe the site as a zine or use zine terminology in visitor copy. Its purpose is finding contradictions in Asmongold's thoughts, positions, and statements: search, compare dates, and verify both statements in their source context. The current workflow is user-led; do not imply automatic contradiction detection or a dedicated comparison feature.
+
+## Easter eggs
+
+`BasementEffects.tsx` adds six roaches on a dark-to-light theme transition. They
+scatter beyond viewport edges, never capture input, and unmount after 1.6 seconds.
+No scatter runs on initial light-mode load or with reduced motion enabled.
+
+The small abandoned cigarette in the footer is keyboard-operable. Clicking it
+triggers a fictional cartoon oxygen-tank/BOOM overlay for 3.2 seconds, then resets.
+The overlay is portaled to the document body, cannot block clicks, and uses a still
+BOOM panel under reduced motion. It contains no audio or rapid flashing.

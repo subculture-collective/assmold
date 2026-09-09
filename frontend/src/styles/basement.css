@@ -1049,3 +1049,224 @@ h3,
     height: 90px;
   }
 }
+
+/* Lights-on gag: a short, non-interactive scatter confined to the viewport. */
+.roach-scatter {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 90;
+}
+.scatter-roach {
+  position: absolute;
+  width: 30px;
+  filter: drop-shadow(2px 3px 1px #0009);
+  animation: scatter-away 1.25s cubic-bezier(0.3, 0.05, 0.7, 1) both;
+}
+.scatter-roach-0 {
+  left: 15%;
+  top: 28%;
+  --escape-x: -30vw;
+  --escape-y: -40vh;
+  --heading: -40deg;
+}
+.scatter-roach-1 {
+  left: 72%;
+  top: 14%;
+  --escape-x: 40vw;
+  --escape-y: -30vh;
+  --heading: 48deg;
+  animation-delay: 0.08s;
+}
+.scatter-roach-2 {
+  left: 36%;
+  top: 73%;
+  --escape-x: -55vw;
+  --escape-y: 40vh;
+  --heading: -130deg;
+  animation-delay: 0.04s;
+}
+.scatter-roach-3 {
+  left: 84%;
+  top: 68%;
+  --escape-x: 35vw;
+  --escape-y: 50vh;
+  --heading: 135deg;
+  animation-delay: 0.15s;
+}
+.scatter-roach-4 {
+  left: 51%;
+  top: 46%;
+  --escape-x: 10vw;
+  --escape-y: -65vh;
+  --heading: 8deg;
+  animation-delay: 0.1s;
+}
+.scatter-roach-5 {
+  left: 59%;
+  top: 85%;
+  --escape-x: -10vw;
+  --escape-y: 40vh;
+  --heading: 190deg;
+  animation-delay: 0.02s;
+}
+@keyframes scatter-away {
+  0% {
+    transform: translate(0, 0) rotate(var(--heading));
+  }
+  18% {
+    transform: translate(5px, -7px) rotate(var(--heading));
+  }
+  100% {
+    transform: translate(var(--escape-x), var(--escape-y)) rotate(var(--heading));
+  }
+}
+.cigarette-surprise {
+  position: absolute;
+  bottom: 4px;
+  left: 47%;
+}
+.forgotten-cigarette {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 44px;
+  transform: rotate(-13deg);
+  cursor: pointer;
+}
+.forgotten-cigarette:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.cigarette-filter {
+  height: 6px;
+  width: 10px;
+  background: #9e6b30;
+}
+.cigarette-paper {
+  height: 6px;
+  width: 21px;
+  background: #bdae8c;
+  box-shadow: inset 0 -2px #756343;
+}
+.cigarette-ash {
+  height: 6px;
+  width: 4px;
+  background: #585046;
+}
+.cigarette-ash.lit {
+  background: #e96728;
+  box-shadow: 0 0 7px #fa6825;
+}
+.basement-blast {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+.blast-scene {
+  position: absolute;
+  right: 8%;
+  bottom: 10%;
+  width: min(360px, 84vw);
+  height: 300px;
+}
+.cartoon-tank {
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+  width: 65px;
+  height: 170px;
+  background: linear-gradient(90deg, #323b2b, #7e8970, #414a34);
+  border: 4px solid #28271e;
+  border-radius: 28px 28px 12px 12px;
+  animation: tank-pop 3.2s both;
+}
+.cartoon-tank::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  width: 16px;
+  height: 20px;
+  background: #a19461;
+  border-top: 5px solid #534732;
+}
+.cartoon-tank span {
+  display: block;
+  margin-top: 65px;
+  text-align: center;
+  color: #e8d8ac;
+  font: 800 30px var(--font-display);
+}
+.blast-cloud {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse, #e2b465 0%, #90502c 47%, #3c3429 68%, transparent 72%);
+  color: #241b12;
+  text-shadow: 1px 1px #deb465;
+  animation: basement-boom 3.2s both;
+}
+.blast-cloud b {
+  font: 900 80px var(--font-display);
+}
+.blast-cloud > span {
+  max-width: 230px;
+  text-align: center;
+  font: 700 12px var(--font-mono);
+}
+@keyframes tank-pop {
+  0%,
+  28% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+  34% {
+    transform: translateY(-7px) rotate(-9deg);
+  }
+  38%,
+  100% {
+    opacity: 0;
+    transform: translateY(-28px) rotate(15deg);
+  }
+}
+@keyframes basement-boom {
+  0%,
+  32% {
+    opacity: 0;
+    transform: scale(0.15);
+  }
+  43% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  55%,
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-35px) scale(1.15);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roach-scatter {
+    display: none;
+  }
+  .cartoon-tank {
+    display: none;
+  }
+  .blast-cloud {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

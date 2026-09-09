@@ -72,13 +72,13 @@ export default function HomePage() {
             <i aria-hidden="true">™</i>
           </h1>
           <p className="basement-tagline">
-            Nothing washed.
+            Find the contradiction.
             <br />
-            <em>Everything indexed.</em>
+            <em>In his own words.</em>
           </p>
           <p className="basement-intro">
-            AsmonTV. Asmongold Clips. Every rabbit hole, bad take, and three-hour detour. Search the
-            transcripts. Find the exact moment.
+            Search AsmonTV and Asmongold Clips for what he said, when he said it, and where his
+            positions contradict each other. Check the quotes against the full context.
           </p>
           <div className="basement-hero-links">
             <Link to="/episodes">
@@ -105,7 +105,7 @@ export default function HomePage() {
         </span>
         <img className="basement-roach hero-roach" src="/roach.svg" alt="" aria-hidden="true" />
         <form onSubmit={onSubmit} className="basement-search">
-          <label htmlFor="home-search">DIG SOMETHING UP.</label>
+          <label htmlFor="home-search">SEARCH HIS STATEMENTS.</label>
           <div className="basement-search-row">
             <span className="basement-search-symbol" aria-hidden="true">
               ⌕
@@ -118,7 +118,7 @@ export default function HomePage() {
               autoComplete="off"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="A topic, quote, guest, or phrase…"
+              placeholder="A position, claim, topic, or exact quote…"
             />
             <button type="submit" className="btn">
               Search archive <span aria-hidden="true">↗</span>
@@ -306,14 +306,14 @@ export default function HomePage() {
         <div>
           <div className="archive-eyebrow">How it works</div>
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-ink">
-            GET YOUR HANDS DIRTY.
+            THEN. NOW. WHAT CHANGED?
           </h2>
         </div>
         <ol className="grid gap-3 sm:grid-cols-3">
           {[
-            ['01', 'Dig', 'A name. A topic. That one thing he said.'],
-            ['02', 'Find', 'Get the quote with the receipts attached.'],
-            ['03', 'Watch', 'Jump to the exact second. In context.'],
+            ['01', 'Search', 'Start with a position, topic, or exact phrase.'],
+            ['02', 'Compare', 'Use dates to find what he said at different times.'],
+            ['03', 'Verify', 'Watch both statements in context. Check whether they contradict.'],
           ].map(([number, title, copy]) => (
             <li key={number} className="border-l border-border pl-4">
               <div className="font-mono text-xs text-accent">{number}</div>

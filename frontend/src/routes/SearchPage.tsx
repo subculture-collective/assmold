@@ -241,11 +241,11 @@ export default function SearchPage() {
           <div className="text-center">
             <div className="archive-eyebrow">Transcript search</div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.055em] text-ink sm:text-6xl">
-              Search the record.
+              Find where his positions collide.
             </h1>
             <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-              Enter a topic or exact phrase. Results are grouped by broadcast and open directly at
-              the matching transcript moment.
+              Search a claim, topic, or exact phrase. Use dates to compare statements across
+              broadcasts, then open each timestamp to check the context.
             </p>
           </div>
           <SearchFiltersPanel

@@ -28,7 +28,8 @@ export default function DesignSystemPage() {
           <span>IS THE BRAND.</span>
         </h1>
         <p>
-          Basement filth. Bootleg zine. A search engine that looks like it lives under the desk.
+          Filth and search. Find contradictions in his thoughts, positions, and statements—in his
+          own words.
         </p>
         <div className="rot-system-actions">
           <button className="btn" onClick={toggleTheme}>
@@ -73,22 +74,22 @@ export default function DesignSystemPage() {
         </div>
         <div className="rot-type-sample">
           <h3>
-            NOTHING WASHED.
+            FIND THE CONTRADICTION.
             <br />
-            EVERYTHING INDEXED.
+            IN HIS OWN WORDS.
           </h3>
           <p>Barlow Condensed · heavy headlines · tight and impatient.</p>
         </div>
         <div className="rot-type-sample">
           <p className="rot-body-sample">
-            Every rabbit hole leaves a trail. Search the words, read the context, and jump to the
-            exact moment.
+            Find what he said then. Find what he says now. Compare the statements and watch the
+            context.
           </p>
           <p>Barlow · body copy · comfortable even three hours into a transcript.</p>
         </div>
         <div className="rot-type-sample">
           <code>00:42:17 / ASMONTV / TRANSCRIPT MATCH</code>
-          <p>IBM Plex Mono · timestamps, labels, receipts.</p>
+          <p>IBM Plex Mono · timestamps, dates, source labels.</p>
         </div>
       </section>
 
@@ -102,8 +103,7 @@ export default function DesignSystemPage() {
             <span className="archive-eyebrow">Grease-stained paper</span>
             <h3>DIG SOMETHING UP.</h3>
             <p>
-              Nicotine stock, tape tabs, ring stains and torn edges. For the most useful thing in
-              the room.
+              Stained, yellowed, and covered in grease. Search is the most useful thing in the room.
             </p>
           </article>
           <article className="rot-encrusted">
@@ -115,12 +115,9 @@ export default function DesignSystemPage() {
             <img src="/roach.svg" alt="" className="rot-material-roach" />
           </article>
           <article className="rot-receipt">
-            <span className="archive-eyebrow">A receipt for every claim</span>
+            <span className="archive-eyebrow">A source for every statement</span>
             <h3>CHECK THE TIMESTAMP.</h3>
-            <p>
-              Perforated dividers. Mono metadata. Straight reading lines through a crooked
-              interface.
-            </p>
+            <p>Every quote needs a date, a timestamp, and a path back to the original statement.</p>
             <span className="timestamp-pill">00:42:17</span>
           </article>
         </div>
@@ -190,7 +187,7 @@ export default function DesignSystemPage() {
             </div>
             <p className="text-muted">
               {tab === 'Surfaces'
-                ? 'Square edges. Hard offset shadows. A little tape, a little tilt, and a lot of accumulated grease.'
+                ? 'Accumulated grease, stained surfaces, and mold. Keep the statements readable.'
                 : tab === 'Motion'
                   ? 'A roach skitters at the edge after a long pause. Controls respond immediately. Reduced-motion preferences stop the decorative movement.'
                   : 'Gross in the headings. Precise in the instructions. Errors explain what happened and how to recover.'}
