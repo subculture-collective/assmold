@@ -14,7 +14,7 @@ export default function AboutPage() {
         <div className="relative z-10 grid min-h-[29rem] gap-10 px-5 py-9 sm:px-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(19rem,0.65fr)] lg:items-end lg:px-12 lg:py-14">
           <div className="space-y-7">
             <div className="archive-eyebrow">About assmold</div>
-            <h1 className="archive-display">A broadcast archive built like a public record.</h1>
+            <h1 className="archive-display">Welcome to the basement.</h1>
             <p className="max-w-3xl text-lg leading-8 text-muted sm:text-xl">
               assmold indexes videos from AsmonTV and Asmongold Clips: searchable transcripts,
               timestamped evidence, topic histories, and direct paths back to the original video.
@@ -29,7 +29,7 @@ export default function AboutPage() {
             </div>
           </div>
           <aside className="archive-section">
-            <div className="archive-eyebrow">Project boundary</div>
+            <div className="archive-eyebrow">Unofficial. Unwashed.</div>
             <p className="mt-4 text-lg font-semibold leading-7 text-ink">
               assmold is an independent Subcult project and is not affiliated with Asmongold,
               Twitch, or YouTube.
@@ -45,9 +45,9 @@ export default function AboutPage() {
       <section className="archive-section">
         <div className="grid gap-8 lg:grid-cols-[15rem_1fr]">
           <div>
-            <div className="archive-eyebrow">The method</div>
+            <div className="archive-eyebrow">How we dig</div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-ink">
-              Evidence before interpretation.
+              Follow the mess to its source.
             </h2>
           </div>
           <ol className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">

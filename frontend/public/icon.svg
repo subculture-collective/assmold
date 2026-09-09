@@ -1,13 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="assmold quotation and play mark">
-  <style>
-    .tile { fill: #17171d; }
-    .mark { fill: #b7ff3c; }
-    @media (prefers-color-scheme: light) {
-      .tile { fill: #f8f5ee; }
-      .mark { fill: #477007; }
-    }
-  </style>
-  <rect class="tile" width="64" height="64" rx="13"/>
-  <path class="mark" d="M11 16h18v18c0 9-5.8 14.4-16.5 15.5v-8.2c5.1-.8 7.7-3.2 7.9-7.3H11V16Zm22 0h20v18c0 9-5.8 14.4-16.5 15.5v-8.2c5.1-.8 7.7-3.2 7.9-7.3H33V16Z"/>
-  <path class="tile" d="m39 21 11 6.5L39 34V21Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Assmold crooked teeth mark"><path fill="#17130e" d="M8 19 87 10 98 76 70 94 13 82 2 44Z"/><path fill="#9d322b" d="M12 28Q43 12 86 24L91 62 81 64 80 87 71 78 69 65 58 70 53 89 46 75 31 70 28 83 23 63 10 57Z"/><path fill="#21190e" d="M13 34Q49 24 88 32L85 62Q46 82 14 58Z"/><g fill="#dcc584" stroke="#302515" stroke-width="2.5"><path d="m17 31 15-4 1 24-12 1Z"/><path d="m35 26 16-1-2 29-14-2Z"/><path d="m54 25 15 1-2 21-13 2Z"/><path d="m73 28 12 5-4 22-12-5Z"/><path d="m19 61 11-8 8 15-14 1Z"/><path d="m41 58 12 2 1 13-15-1Z"/><path d="m61 53 13 4-3 14-13 1Z"/></g><path d="m39 29 4 12-6 3m40-8-5 7" fill="none" stroke="#77632e" stroke-width="2"/><g fill="#645127"><circle cx="24" cy="38" r="2"/><circle cx="62" cy="33" r="2.4"/><circle cx="46" cy="66" r="2"/></g></svg>

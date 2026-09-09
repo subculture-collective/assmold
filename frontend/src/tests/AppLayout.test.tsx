@@ -32,11 +32,11 @@ describe('AppLayout navigation', () => {
     const { container } = render(<AppLayout />, { wrapper: MemoryRouter });
     const navigation = within(screen.getByRole('navigation', { name: 'Main navigation' }));
     for (const [name, href] of [
-      ['Home', '/'],
+      ['The basement', '/'],
       ['Search', '/search'],
       ['Explore', '/explore'],
       ['Timeline', '/timeline'],
-      ['VODs', '/episodes'],
+      ['The pile', '/episodes'],
       ['Saved', '/saved'],
       ['Support', '/support'],
     ]) {

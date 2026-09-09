@@ -1,6 +1,7 @@
 import { lazy, StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+import './styles/basement.css';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import AppLayout from './routes/AppLayout';
@@ -22,6 +23,7 @@ const LoginPage = lazy(() => import('./routes/LoginPage'));
 const AccountPage = lazy(() => import('./routes/AccountPage'));
 const FavoritesPage = lazy(() => import('./routes/FavoritesPage'));
 const SupportPage = lazy(() => import('./routes/SupportPage'));
+const DesignSystemPage = lazy(() => import('./routes/DesignSystemPage'));
 const AboutPage = lazy(() => import('./routes/AboutPage'));
 const PrivacyPage = lazy(() =>
   import('./routes/PolicyPages').then((module) => ({ default: module.PrivacyPage }))
@@ -145,6 +147,14 @@ const router = createBrowserRouter([
         element: (
           <Page>
             <SupportPage />
+          </Page>
+        ),
+      },
+      {
+        path: 'design-system',
+        element: (
+          <Page>
+            <DesignSystemPage />
           </Page>
         ),
       },

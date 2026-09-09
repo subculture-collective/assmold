@@ -57,9 +57,7 @@ describe('HomePage', () => {
     renderWithProviders(<HomePage />);
 
     await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { name: 'Find the moment. Read the record.' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: 'ASSMOLD' })).toBeInTheDocument();
     });
 
     expect(screen.getByPlaceholderText('A topic, quote, guest, or phrase…')).toBeInTheDocument();
@@ -73,7 +71,10 @@ describe('HomePage', () => {
     expect(screen.getByText('+1')).toBeInTheDocument();
     expect(screen.queryByText('Gaming')).not.toBeInTheDocument();
     expect(screen.getByText('rent')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'gaming' })).toHaveAttribute('href', '/search?q=gaming');
+    expect(screen.getByRole('link', { name: 'gaming' })).toHaveAttribute(
+      'href',
+      '/search?q=gaming'
+    );
     expect(screen.getByRole('link', { name: /rent/ })).toHaveAttribute('href', '/search?q=rent');
     expect(screen.getByRole('link', { name: /Explore the archive/ })).toHaveAttribute(
       'href',

@@ -59,125 +59,116 @@ export default function HomePage() {
   const newestVideo = recentVideos[0];
 
   return (
-    <div className="space-y-5 lg:space-y-7">
-      <section className="archive-masthead">
-        <div className="relative z-10 grid min-h-[34rem] gap-10 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(24rem,0.85fr)] lg:items-end lg:px-12 lg:py-14">
-          <div className="space-y-8">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="archive-eyebrow">Asmongold videos & clips</span>
-              <span className="source-pill">searchable transcripts</span>
-            </div>
-
-            <div className="space-y-6">
-              <h1 className="archive-display">Find the moment. Read the record.</h1>
-              <p className="max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-                Search AsmonTV and Asmongold Clips by topic or exact phrase, then jump straight to
-                the moment in the original video.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-              <Link to="/explore" className="action-link font-semibold">
-                Explore the archive →
-              </Link>
-              <Link to="/episodes" className="text-muted transition-colors hover:text-ink">
-                Browse videos and clips
-              </Link>
-              <Link to="/support" className="text-muted transition-colors hover:text-ink">
-                Support the archive
-              </Link>
-            </div>
+    <div className="basement-home">
+      <section className="basement-hero" aria-labelledby="basement-title">
+        <div className="basement-scene" aria-hidden="true" />
+        <div className="basement-hero-content">
+          <div className="basement-kicker">
+            <span className="live-speck" /> THE UNOFFICIAL ASMON ARCHIVE{' '}
+            <span>EST. IN THE ROT</span>
           </div>
-
-          <div className="space-y-4 lg:pb-1">
-            <div className="archive-rule-title">Search the record</div>
-            <form onSubmit={onSubmit} className="archive-command">
-              <label className="sr-only" htmlFor="home-search">
-                Search the Asmongold archive
-              </label>
-              <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
-                <div className="flex min-w-0 items-center gap-3 px-3">
-                  <svg
-                    className="h-5 w-5 shrink-0 text-subtle"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <circle cx="11" cy="11" r="7" strokeWidth="1.8" />
-                    <path d="m20 20-4-4" strokeWidth="1.8" strokeLinecap="round" />
-                  </svg>
-                  <input
-                    id="home-search"
-                    name="q"
-                    type="search"
-                    autoComplete="off"
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder="A topic, quote, guest, or phrase…"
-                    className="min-h-[54px] w-full bg-transparent text-lg text-ink outline-none placeholder:text-subtle"
-                  />
-                </div>
-                <button type="submit" className="btn min-h-[54px] px-7">
-                  Search archive
-                </button>
-              </div>
-            </form>
-
-            <div className="flex flex-wrap items-center gap-2 text-xs text-subtle">
-              <span className="mr-1 uppercase tracking-[0.18em]">Try</span>
-              {searchExamples.map((term) => (
-                <Link
-                  key={term}
-                  to={`/search?q=${encodeURIComponent(term)}`}
-                  className="source-pill hover:border-accent/50 hover:text-ink"
-                >
-                  {term}
-                </Link>
-              ))}
-            </div>
+          <h1 id="basement-title" aria-label="ASSMOLD" className="basement-wordmark">
+            ASS<span>MOLD</span>
+            <i aria-hidden="true">™</i>
+          </h1>
+          <p className="basement-tagline">
+            Nothing washed.
+            <br />
+            <em>Everything indexed.</em>
+          </p>
+          <p className="basement-intro">
+            AsmonTV. Asmongold Clips. Every rabbit hole, bad take, and three-hour detour. Search the
+            transcripts. Find the exact moment.
+          </p>
+          <div className="basement-hero-links">
+            <Link to="/episodes">
+              Browse videos and clips <span aria-hidden="true">↗</span>
+            </Link>
+            <Link to="/explore">
+              Explore the archive <span aria-hidden="true">↗</span>
+            </Link>
+            <Link to="/support">
+              Support the archive <span aria-hidden="true">↗</span>
+            </Link>
           </div>
         </div>
-
-        <div className="archive-data-strip relative z-10">
-          <div className="archive-data-cell">
-            <div className="meta-label">Searchable VODs</div>
-            <div className="mt-2 font-mono text-xl font-semibold text-ink">
-              {summaryState === 'loading' && !summary
-                ? '—'
-                : summary
-                  ? formatNumber(summary.video_count)
-                  : '—'}
-            </div>
+        <div className="basement-sticker" aria-hidden="true">
+          <img src="/icon.svg" alt="" />
+          <span>
+            UNBRUSHED.
+            <br />
+            UNOFFICIAL.
+          </span>
+        </div>
+        <span className="basement-scene-note" aria-hidden="true">
+          FIG. 01 / DO NOT TOUCH THE SHIRT
+        </span>
+        <img className="basement-roach hero-roach" src="/roach.svg" alt="" aria-hidden="true" />
+        <form onSubmit={onSubmit} className="basement-search">
+          <label htmlFor="home-search">DIG SOMETHING UP.</label>
+          <div className="basement-search-row">
+            <span className="basement-search-symbol" aria-hidden="true">
+              ⌕
+            </span>
+            <input
+              id="home-search"
+              aria-label="Search the Asmongold archive"
+              name="q"
+              type="search"
+              autoComplete="off"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="A topic, quote, guest, or phrase…"
+            />
+            <button type="submit" className="btn">
+              Search archive <span aria-hidden="true">↗</span>
+            </button>
           </div>
-          <div className="archive-data-cell">
-            <div className="meta-label">Recorded runtime</div>
-            <div className="mt-2 font-mono text-xl font-semibold text-ink">
-              {summaryState === 'loading' && !summary
-                ? '—'
-                : summary
-                  ? formatDuration(summary.total_duration_seconds)
-                  : '—'}
-            </div>
+          <div className="basement-search-examples">
+            <span>POKE AROUND:</span>
+            {searchExamples.map((term) => (
+              <Link key={term} to={`/search?q=${encodeURIComponent(term)}`}>
+                {term}
+              </Link>
+            ))}
           </div>
-          <div className="archive-data-cell">
-            <div className="meta-label">Transcript words</div>
-            <div className="mt-2 font-mono text-xl font-semibold text-ink">
-              {summaryState === 'loading' && !summary
-                ? '—'
-                : summary
-                  ? formatNumber(summary.transcript_word_count)
-                  : '—'}
-            </div>
-          </div>
-          <div className="archive-data-cell">
-            <div className="meta-label">Index refreshed</div>
-            <div className="mt-2 font-mono text-sm font-semibold text-ink">
-              {summaryState === 'loading' && !summary
-                ? 'Checking…'
-                : formatDate(summary?.updated_at ?? null)}
-            </div>
-          </div>
+        </form>
+      </section>
+      <div className="basement-ticker" aria-hidden="true">
+        <span>NO AIR FRESHENER</span>
+        <b>×</b>
+        <span>JUST TIMESTAMPS</span>
+        <b>×</b>
+        <span>ENTER AT YOUR OWN DISGUST</span>
+        <b>×</b>
+        <span>NO AIR FRESHENER</span>
+        <b>×</b>
+        <span>JUST TIMESTAMPS</span>
+      </div>
+      <section className="basement-ledger" aria-label="Archive statistics">
+        <div>
+          <span>Searchable VODs</span>
+          <strong>{summary ? formatNumber(summary.video_count) : '—'}</strong>
+          <small>pulled out of the pile</small>
+        </div>
+        <div>
+          <span>Recorded runtime</span>
+          <strong>{summary ? formatDuration(summary.total_duration_seconds) : '—'}</strong>
+          <small>time you’re not getting back</small>
+        </div>
+        <div>
+          <span>Transcript words</span>
+          <strong>{summary ? formatNumber(summary.transcript_word_count) : '—'}</strong>
+          <small>every last word of it</small>
+        </div>
+        <div>
+          <span>Index refreshed</span>
+          <strong className="ledger-date">
+            {summaryState === 'loading' && !summary
+              ? 'Checking…'
+              : formatDate(summary?.updated_at ?? null)}
+          </strong>
+          <small>the pile keeps growing</small>
         </div>
       </section>
 
@@ -235,9 +226,9 @@ export default function HomePage() {
         <div className="archive-section space-y-5">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <div className="archive-eyebrow">Latest signal</div>
+              <div className="archive-eyebrow">Fresh out of the pile</div>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-ink">
-                Recently indexed
+                THE LATEST FILTH.
               </h2>
             </div>
             <Link to="/episodes" className="action-link text-sm">
@@ -264,12 +255,12 @@ export default function HomePage() {
 
         <section aria-label="Archive highlights" className="archive-section flex flex-col gap-6">
           <div>
-            <div className="archive-eyebrow">Open a thread</div>
+            <div className="archive-eyebrow">Something festering</div>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-ink">
               Popular searches
             </h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Recurring archive terms, ready to open as timestamped evidence.
+              The subjects people keep digging through. Pick one and follow the smell.
             </p>
           </div>
 
@@ -315,14 +306,14 @@ export default function HomePage() {
         <div>
           <div className="archive-eyebrow">How it works</div>
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-ink">
-            From broadcast to evidence.
+            GET YOUR HANDS DIRTY.
           </h2>
         </div>
         <ol className="grid gap-3 sm:grid-cols-3">
           {[
-            ['01', 'Search', 'Use a subject, name, or exact phrase.'],
-            ['02', 'Inspect', 'Compare matching moments across VODs.'],
-            ['03', 'Read', 'Open the transcript at the cited timestamp.'],
+            ['01', 'Dig', 'A name. A topic. That one thing he said.'],
+            ['02', 'Find', 'Get the quote with the receipts attached.'],
+            ['03', 'Watch', 'Jump to the exact second. In context.'],
           ].map(([number, title, copy]) => (
             <li key={number} className="border-l border-border pl-4">
               <div className="font-mono text-xs text-accent">{number}</div>

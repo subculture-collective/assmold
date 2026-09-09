@@ -19,7 +19,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   return (
     <Link
       to={`/v/${video.id}`}
-      className="group overflow-hidden rounded-xl border border-border bg-surface-muted/55 transition-[transform,border-color,box-shadow] hover:-translate-y-0.5 hover:border-accent/65 hover:shadow-[0_18px_40px_rgba(0,0,0,0.28)]"
+      className="basement-video-card group overflow-hidden rounded-xl border border-border bg-surface-muted/55 transition-[transform,border-color,box-shadow] hover:-translate-y-0.5 hover:border-accent/65 hover:shadow-[0_18px_40px_rgba(0,0,0,0.28)]"
     >
       <div className="relative aspect-video overflow-hidden border-b border-border bg-canvas">
         <img
@@ -37,7 +37,7 @@ export default function VideoCard({ video }: VideoCardProps) {
       </div>
 
       <div className="p-4">
-        <div className="line-clamp-2 min-h-[3rem] text-lg font-semibold leading-6 tracking-[-0.03em] text-ink transition-colors group-hover:text-accent">
+        <div className="basement-video-title line-clamp-2 min-h-[3rem] text-lg font-semibold leading-6 tracking-[-0.03em] text-ink transition-colors group-hover:text-accent">
           {video.title || 'Untitled VOD'}
         </div>
         <div className="mt-2 flex items-center justify-between gap-3 text-xs text-muted">

@@ -1,35 +1,32 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-display: 'Alegreya Sans', 'Segoe UI', sans-serif;
-  --font-body: 'Alegreya Sans', 'Segoe UI', sans-serif;
-  --font-sans: 'Alegreya Sans', 'Segoe UI', sans-serif;
-  --font-serif:
-    'Atkinson Hyperlegible Next', 'Alegreya', 'Iowan Old Style', 'Palatino Linotype',
-    'Book Antiqua', Georgia, serif;
-  --font-mono:
-    'JetBrainsMono Nerd Font', 'JetBrains Mono', 'SFMono-Regular', 'Menlo', 'Monaco', monospace;
-  --color-canvas: #101014;
-  --color-surface: #17171d;
-  --color-surface-muted: #202029;
-  --color-surface-raised: #262633;
-  --color-border: #343441;
-  --color-border-strong: #4a4a5b;
-  --color-ink: #f1f1f4;
-  --color-muted: #9a9aaa;
-  --color-subtle: #8d8d9f;
-  --color-accent: #b7ff3c;
-  --color-accent-hover: #d1ff7a;
-  --color-accent-soft: #1f2a12;
-  --color-accent-contrast: #101014;
-  --color-player-accent: #b7ff3c;
-  --color-cta: #c084fc;
-  --color-success: #b7ff3c;
-  --color-success-soft: #1f2a12;
-  --color-warning: #ffd166;
-  --color-warning-soft: #2f2412;
-  --color-danger: #ff6b6b;
-  --color-danger-soft: #35171a;
+  --font-display: 'Barlow Condensed', Impact, sans-serif;
+  --font-body: 'Barlow', Arial, sans-serif;
+  --font-sans: 'Barlow', Arial, sans-serif;
+  --font-serif: 'Barlow', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --color-canvas: #15130f;
+  --color-surface: #211e17;
+  --color-surface-muted: #2b271d;
+  --color-surface-raised: #363023;
+  --color-border: #4f4633;
+  --color-border-strong: #80704e;
+  --color-ink: #e6d6ad;
+  --color-muted: #bdb092;
+  --color-subtle: #ac9d7e;
+  --color-accent: #c8d66a;
+  --color-accent-hover: #e0eaa0;
+  --color-accent-soft: #33351c;
+  --color-accent-contrast: #17180d;
+  --color-player-accent: #c8d66a;
+  --color-cta: #e5a58a;
+  --color-success: #c8d66a;
+  --color-success-soft: #33351c;
+  --color-warning: #e8b35d;
+  --color-warning-soft: #3e2e19;
+  --color-danger: #f18b72;
+  --color-danger-soft: #42221c;
   --tab-size-2: 2;
   --tab-size-4: 4;
   --tab-size-github: 8;
@@ -41,37 +38,37 @@
 
 .light {
   color-scheme: light;
-  --color-canvas: #f1efe8;
-  --color-surface: #f8f5ee;
-  --color-surface-muted: #efe9dc;
-  --color-surface-raised: #ffffff;
-  --color-border: #d5ccbb;
-  --color-border-strong: #b9af9a;
-  --color-ink: #1e1d22;
-  --color-muted: #5f5c68;
-  --color-subtle: #6b6774;
-  --color-accent: #477007;
-  --color-accent-hover: #3f6505;
-  --color-accent-soft: #edf5dd;
-  --color-accent-contrast: #ffffff;
-  --color-cta: #7c3aed;
-  --color-success: #477007;
-  --color-success-soft: #edf5dd;
-  --color-warning: #8b5900;
-  --color-warning-soft: #fff1cf;
-  --color-danger: #a93a3a;
-  --color-danger-soft: #fde1e1;
+  --color-canvas: #c6b68e;
+  --color-surface: #ded0aa;
+  --color-surface-muted: #cbbc94;
+  --color-surface-raised: #ecdfb9;
+  --color-border: #9c885e;
+  --color-border-strong: #6d5938;
+  --color-ink: #272017;
+  --color-muted: #584a34;
+  --color-subtle: #615038;
+  --color-accent: #505b16;
+  --color-accent-hover: #354008;
+  --color-accent-soft: #c3c591;
+  --color-accent-contrast: #f6eccd;
+  --color-cta: #8b3025;
+  --color-success: #465413;
+  --color-success-soft: #c3c591;
+  --color-warning: #734910;
+  --color-warning-soft: #e4c793;
+  --color-danger: #8b3025;
+  --color-danger-soft: #ddb096;
 }
 
 html {
-  background: #101014;
+  background: var(--color-canvas);
 }
 
 body {
   position: relative;
   min-height: 100vh;
-  background-color: theme('colors.canvas');
-  color: theme('colors.ink');
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
   font-family: theme('fontFamily.body');
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -92,12 +89,12 @@ body {
 }
 
 .dark body {
-  background-color: theme('colors.canvas');
-  color: theme('colors.ink');
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
 }
 
 ::selection {
-  background: rgba(183, 255, 60, 0.28);
+  background: rgba(168, 72, 42, 0.35);
   color: #f1f1f4;
 }
 

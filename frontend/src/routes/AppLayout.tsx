@@ -3,11 +3,11 @@ import { Link, NavLink, Outlet, useLocation, useNavigationType } from 'react-rou
 import { useAuth, useTheme } from '../services';
 
 const navItems = [
-  { to: '/', label: 'Home' },
+  { to: '/', label: 'The basement' },
   { to: '/search', label: 'Search' },
   { to: '/explore', label: 'Explore' },
   { to: '/timeline', label: 'Timeline' },
-  { to: '/episodes', label: 'VODs' },
+  { to: '/episodes', label: 'The pile' },
   { to: '/saved', label: 'Saved' },
   { to: '/support', label: 'Support' },
 ];
@@ -15,7 +15,7 @@ const navItems = [
 const routeMeta: Array<{ match: RegExp; title: string; description: string }> = [
   {
     match: /^\/$/,
-    title: 'assmold — Broadcast archive',
+    title: 'assmold — Basement archive',
     description: 'Search and watch the public Asmongold broadcast archive.',
   },
   {
@@ -62,6 +62,11 @@ const routeMeta: Array<{ match: RegExp; title: string; description: string }> = 
     match: /^\/support/,
     title: 'Support the archive — assmold',
     description: 'Help keep assmold public, searchable, and independently maintained.',
+  },
+  {
+    match: /^\/design-system/,
+    title: 'The rot is the brand — assmold design system',
+    description: 'The palette, typography, materials, and components behind Assmold.',
   },
   {
     match: /^\/about/,
@@ -156,7 +161,7 @@ export default function AppLayout() {
   }, [mobileMenuOpen]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-canvas text-ink transition-colors">
+    <div className="basement-shell flex min-h-screen flex-col bg-canvas text-ink transition-colors">
       <RouteTransitionManager />
       <a
         href="#main-content"
@@ -169,12 +174,16 @@ export default function AppLayout() {
       </a>
 
       <header
-        className="sticky top-0 z-40 border-b border-border/80 bg-canvas/85 backdrop-blur-2xl"
+        className="basement-header sticky top-0 z-40 border-b border-border/80 bg-canvas/85 backdrop-blur-2xl"
         role="banner"
       >
         <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-4 py-3 lg:px-6">
           <div className="flex items-center gap-4">
-            <Link to="/" className="group flex items-center gap-3" aria-label="Home - assmold">
+            <Link
+              to="/"
+              className="basement-brand group flex items-center gap-3"
+              aria-label="Home - assmold"
+            >
               <img
                 src="/icon.svg"
                 alt=""
@@ -187,7 +196,7 @@ export default function AppLayout() {
                   assmold
                 </span>
                 <span className="mt-1 hidden text-[8px] font-bold uppercase tracking-[0.24em] text-subtle sm:block">
-                  Broadcast archive
+                  Basement archive
                 </span>
               </span>
             </Link>
@@ -484,16 +493,17 @@ export default function AppLayout() {
       </main>
 
       <footer
-        className="border-t border-border/80 bg-canvas/80 backdrop-blur-xl"
+        className="basement-footer border-t border-border/80 bg-canvas/80 backdrop-blur-xl"
         role="contentinfo"
       >
         <div className="mx-auto grid max-w-[100rem] gap-5 px-4 py-7 text-sm text-muted sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center lg:px-6">
           <p>
+            <span className="footer-motto">STILL HERE. STILL GROSS.</span>
             &copy; {new Date().getFullYear()} assmold. A{' '}
             <a href="https://subcult.tv" className="action-link underline underline-offset-2">
               Subcult
             </a>{' '}
-            project.
+            project. Unofficial. Unaffiliated. Unwashed.
           </p>
           <nav
             aria-label="Project and legal"
@@ -501,6 +511,9 @@ export default function AppLayout() {
           >
             <Link to="/about" className="action-link">
               About
+            </Link>
+            <Link to="/design-system" className="action-link">
+              Design system
             </Link>
             <Link to="/privacy" className="action-link">
               Privacy
