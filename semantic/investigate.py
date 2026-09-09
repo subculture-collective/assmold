@@ -12,7 +12,7 @@ import httpx
 
 from semantic.core import COLLECTION, deduplicate, embed, qdrant, retrieval_filter
 
-VERSION = "counterstatements-v1"
+VERSION = "counterstatements-v2"
 MODEL = "deepseek/deepseek-v4-pro"
 RELATIONS = {"possible_contradiction", "changed_position", "different_context", "consistent", "unclear"}
 SYSTEM = """You investigate public statements, not prove a predetermined accusation.
@@ -179,6 +179,43 @@ A useful empty result is preferable to manufactured disagreement.""",
         assessments = validated_assessments(body, anchor, candidates)
         if body.get("assessments") and not assessments:
             raise ValueError("assessment evidence failed validation")
+    proposed = [row for row in assessments if row["relation"] == "possible_contradiction"]
+    if proposed:
+        reviewed = chat(
+            """Act as a skeptical second reviewer of proposed contradictions.
+Return {reviews:[{id: candidate id, relation: possible_contradiction|different_context|consistent|unclear,
+explanation: corrected reasoning, alternative: strongest explanation for consistency,
+verification: concrete remaining checks}]}. Each text field must be 8-1800 characters.
+Read the FULL source passages, not just the first assessment. Formalize the rule,
+its explicit exceptions, the other claim and its conditions. If the second case
+falls within an exception in the first, classify consistent. A mixed example
+containing an allowed reason (such as a violent threat) is NOT proof the speaker
+endorses punishment absent that reason; do not infer that counterfactual. Use
+unclear if the rule cannot be isolated. Distinct targets, audiences or conditions
+usually mean different_context. Only keep possible_contradiction when two
+identifiable propositions on the SAME subject are incompatible under comparable
+conditions, after applying every stated exception. Uncertain speaker attribution
+must be acknowledged; quotation or reacting is not evidence of endorsement.
+Do not rescue an accusation because the first reviewer suggested it.""",
+            {"anchor": anchor, "proposals": proposed},
+            cache,
+        )
+        reviews = {row.get("id"): row for row in reviewed.get("reviews", []) if isinstance(row, dict)}
+        for row in proposed:
+            review = reviews.get(row["statement"]["id"])
+            if not review or review.get("relation") not in {
+                "possible_contradiction",
+                "different_context",
+                "consistent",
+                "unclear",
+            }:
+                raise ValueError("missing skeptical review")
+            if any(
+                not isinstance(review.get(k), str) or not 8 <= len(review[k]) <= 1800
+                for k in ("explanation", "alternative", "verification")
+            ):
+                raise ValueError("invalid skeptical review")
+            row.update({k: review[k] for k in ("relation", "explanation", "alternative", "verification")})
     return {
         "anchor": anchor,
         "claim": claim,

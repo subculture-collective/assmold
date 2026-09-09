@@ -64,25 +64,29 @@ describe('meaning search', () => {
       vi
         .fn()
         .mockResolvedValueOnce({ ok: true, json: async () => ({ items, indexed_videos: 20 }) })
+        .mockResolvedValueOnce({ ok: true, json: async () => ({ job_id: 'job-1' }) })
         .mockResolvedValueOnce({
           ok: true,
           json: async () => ({
-            anchor: items[0],
-            claim: 'The claim in the source',
-            queries: ['neutral', 'opposing', 'exceptions'],
-            candidates_checked: 12,
-            indexed_videos: 20,
-            assessments: [
-              {
-                statement: items[1],
-                relation: 'different_context',
-                anchor_quote: items[0].text,
-                counter_quote: items[1].text,
-                explanation: 'Different circumstances apply.',
-                alternative: 'The second passage concerns a different rule.',
-                verification: 'Verify the speakers in both videos.',
-              },
-            ],
+            state: 'complete',
+            result: {
+              anchor: items[0],
+              claim: 'The claim in the source',
+              queries: ['neutral', 'opposing', 'exceptions'],
+              candidates_checked: 12,
+              indexed_videos: 20,
+              assessments: [
+                {
+                  statement: items[1],
+                  relation: 'different_context',
+                  anchor_quote: items[0].text,
+                  counter_quote: items[1].text,
+                  explanation: 'Different circumstances apply.',
+                  alternative: 'The second passage concerns a different rule.',
+                  verification: 'Verify the speakers in both videos.',
+                },
+              ],
+            },
           }),
         })
     );

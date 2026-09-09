@@ -132,8 +132,18 @@ abuse. This is an endpoint throttle, not a spending-budget change. Paid chapter
 processing and semantic backfill retain their existing settings. Tokens are tracked
 in Redis; provider billing remains authoritative for cost.
 
-Semantic API image: `assmold-semantic:counterstatements-20260909`. The indexer stays
+Semantic API image: `assmold-semantic:counterstatements-20260909-v2`. The indexer stays
 on `20260909-v4`. Pre-change intelligence override is saved under
 `releases/counterstatements-20260909/intelligence-rollback.yml`; copy it back to the
 project root before using it, because env-file paths are relative to the compose
 file location. Recreate only `semantic`, never whole-project down.
+
+A second skeptical review rechecks every proposed contradiction against full
+passages and explicit exceptions. Mixed examples containing an allowed reason are
+not evidence that the speaker endorses action without that reason. The initial
+live canary exposed this failure mode and motivated this review.
+
+The POST returns a 202 job ID immediately. Poll GET
+`/api/semantic/investigate/{job_id}` for completion/failure; jobs expire after one
+hour and unfinished jobs become failed after fifteen minutes, without retry.
+This avoids CDN request timeouts during multi-stage model work.

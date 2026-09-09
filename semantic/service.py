@@ -4,10 +4,10 @@ import json
 import os
 import time
 from datetime import date
-from uuid import UUID
+from uuid import UUID, uuid4
 
 import redis
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
 from pydantic import BaseModel, ConfigDict
 
 from semantic.core import COLLECTION, deduplicate, embed, qdrant, query_key, retrieval_filter
@@ -94,7 +94,6 @@ class InvestigationRequest(BaseModel):
     anchor_id: UUID
 
 
-@app.post("/semantic/investigate")
 def counterstatements(request: InvestigationRequest):
     try:
         # Clients submit a source ID only: no invented captions enter the assessment.
@@ -112,7 +111,7 @@ def counterstatements(request: InvestigationRequest):
         if saved:
             return {**json.loads(saved), "cached": True}
         # A single global lane bounds paid work; an uncertain call is never auto-retried.
-        with cache.lock("semantic:investigation-lane", timeout=600, blocking_timeout=1):
+        with cache.lock("semantic:investigation-lane", timeout=900, blocking_timeout=1):
             saved = cache.get(key)
             if saved:
                 return {**json.loads(saved), "cached": True}
@@ -133,3 +132,51 @@ def counterstatements(request: InvestigationRequest):
         raise HTTPException(
             503, "The investigation could not finish. Your source passage is unchanged. You can try again."
         ) from None
+
+
+def finish_investigation(job_id: str, request: InvestigationRequest):
+    try:
+        result = {"state": "complete", "result": counterstatements(request)}
+    except HTTPException as error:
+        result = {"state": "failed", "detail": error.detail}
+    except Exception:
+        result = {"state": "failed", "detail": "Investigation could not finish. Try again later."}
+    cache.setex("semantic:job:" + job_id, 3600, json.dumps(result))
+
+
+@app.post("/semantic/investigate", status_code=202)
+def start_investigation(request: InvestigationRequest, background: BackgroundTasks):
+    try:
+        key = "semantic:job-requests:" + str(int(time.time()) // 60)
+        count = cache.incr(key)
+        if count == 1:
+            cache.expire(key, 120)
+        if count > 30:
+            raise HTTPException(429, "Counterstatement search is busy. Try again shortly.")
+        job_id = str(uuid4())
+        cache.setex("semantic:job:" + job_id, 3600, json.dumps({"state": "running", "started_at": time.time()}))
+        background.add_task(finish_investigation, job_id, request)
+        return {"job_id": job_id}
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(503, "Investigation could not start. Try again later.") from None
+
+
+@app.get("/semantic/investigate/{job_id}")
+def investigation_result(job_id: UUID):
+    try:
+        raw = cache.get("semantic:job:" + str(job_id))
+        if not raw:
+            raise HTTPException(404, "This investigation expired. Select the passage to start again.")
+        result = json.loads(raw)
+        if result["state"] == "running" and time.time() - result["started_at"] > 900:
+            return {
+                "state": "failed",
+                "detail": "The investigation was interrupted or timed out. It has not been automatically retried.",
+            }
+        return result
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(503, "Investigation status is temporarily unavailable.") from None

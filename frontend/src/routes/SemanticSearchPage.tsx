@@ -85,7 +85,33 @@ export default function SemanticSearchPage() {
         throw new Error(
           typeof body.detail === 'string' ? body.detail : 'Investigation could not finish.'
         );
-      if (!controller.signal.aborted) setInvestigation(body);
+      let result = body;
+      if (body.job_id) {
+        while (!controller.signal.aborted) {
+          const poll = await fetch(`/api/semantic/investigate/${body.job_id}`, {
+            signal: controller.signal,
+          });
+          const status = await poll.json();
+          if (!poll.ok || status.state === 'failed')
+            throw new Error(
+              typeof status.detail === 'string' ? status.detail : 'Investigation could not finish.'
+            );
+          if (status.state === 'complete') {
+            result = status.result;
+            break;
+          }
+          await new Promise<void>((resolve) => {
+            const done = () => {
+              clearTimeout(timer);
+              controller.signal.removeEventListener('abort', done);
+              resolve();
+            };
+            const timer = setTimeout(done, 2500);
+            controller.signal.addEventListener('abort', done, { once: true });
+          });
+        }
+      }
+      if (!controller.signal.aborted) setInvestigation(result);
     } catch (error) {
       if (!controller.signal.aborted)
         setInvestigationError(
