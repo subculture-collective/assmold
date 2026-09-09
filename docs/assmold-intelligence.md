@@ -88,3 +88,16 @@ validation, date bounds, deduplication, caching and failure responses. Frontend
 indexing/query retrieval and mobile two-source comparison were also exercised.
 This is an initial retrieval implementation, not a measured corpus-wide
 contradiction-detection benchmark. Indexing and enrichment continue in background.
+
+## September 9 deployment readback
+
+Frontend 28190d0 is live as `assmold-frontend:semantic-20260909-v2`; canonical
+override `releases/rot-design/frontend-release.json`, previous image retained in
+`releases/semantic-ui/frontend-rollback.json`. Worker configuration 3b2e4b6 fixes
+inherited HTTP health probes and allows 300 seconds for enrichment to drain.
+
+During worker recreation, request `19cbb56c-247a-4d73-a2b9-3337867ba8e8` was
+interrupted. Provider completion/cost is unknown. The run is retained as cancelled
+with uncertainty metadata, and its job is parked without automatic retry. Queue
+maintenance recovery `57ac0c58-ba8b-4145-a28e-df382f2e1c61` resumed other work.
+Eleven continuous jobs had completed before that recovery.
