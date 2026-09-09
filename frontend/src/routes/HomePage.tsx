@@ -125,7 +125,8 @@ export default function HomePage() {
             </button>
           </div>
           <div className="basement-search-examples">
-            <span>POKE AROUND:</span>
+            <Link to={`/semantic?q=${encodeURIComponent(query)}`}>Search by meaning →</Link>
+            <span>TOPICS:</span>
             {searchExamples.map((term) => (
               <Link key={term} to={`/search?q=${encodeURIComponent(term)}`}>
                 {term}

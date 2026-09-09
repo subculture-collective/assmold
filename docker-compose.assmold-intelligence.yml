@@ -1,0 +1,50 @@
+# Add to docker-compose.assmold.yml; start only the named intelligence services.
+services:
+  vectors:
+    image: qdrant/qdrant:v1.18.1
+    container_name: assmold-vectors
+    volumes: [semantic-vectors:/qdrant/storage]
+    restart: unless-stopped
+    cpus: 1
+    mem_limit: 2g
+  semantic:
+    image: assmold-semantic:20260909-v2
+    container_name: assmold-semantic
+    env_file: ./releases/enrichment-20260909/.env.enrichment
+    environment:
+      QDRANT_URL: http://assmold-vectors:6333
+    networks: [default, management]
+    command: ['uvicorn', 'semantic.service:app', '--host', '0.0.0.0', '--port', '8001']
+    restart: unless-stopped
+    cpus: 1
+    mem_limit: 512m
+    healthcheck:
+      test: ['CMD', 'python3', '-c', 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8001/healthz")']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  semantic-indexer:
+    image: assmold-semantic:20260909-v2
+    env_file: ./releases/enrichment-20260909/.env.enrichment
+    environment:
+      QDRANT_URL: http://assmold-vectors:6333
+      SEMANTIC_STATE_DIR: /data
+    volumes: [semantic-state:/data]
+    command: ['python3', '-m', 'semantic.indexer']
+    restart: unless-stopped
+    cpus: 0.75
+    mem_limit: 512m
+  enrichment:
+    image: assmold-enrichment:20260909
+    env_file: ./releases/enrichment-20260909/.env.enrichment
+    environment:
+      ARCHIVE_ENRICHMENT_AUTO_APPROVE: 'true'
+      ARCHIVE_ENRICHMENT_PUBLISH: 'false'
+    command: ['python3', 'scripts/run_archive_enrichment_queue.py', '--continuous']
+    restart: unless-stopped
+    cpus: 1
+    mem_limit: 1g
+    profiles: [enrichment]
+volumes:
+  semantic-vectors:
+  semantic-state:

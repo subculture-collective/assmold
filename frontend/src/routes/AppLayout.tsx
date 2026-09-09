@@ -20,6 +20,11 @@ const routeMeta: Array<{ match: RegExp; title: string; description: string }> = 
     description: 'Search and watch the public Asmongold broadcast archive.',
   },
   {
+    match: /^\/semantic/,
+    title: 'Search meaning and compare statements — assmold',
+    description: 'Find related statements and compare positions across dates and source context.',
+  },
+  {
     match: /^\/search/,
     title: 'Search transcripts — assmold',
     description:

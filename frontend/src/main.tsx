@@ -23,6 +23,7 @@ const LoginPage = lazy(() => import('./routes/LoginPage'));
 const AccountPage = lazy(() => import('./routes/AccountPage'));
 const FavoritesPage = lazy(() => import('./routes/FavoritesPage'));
 const SupportPage = lazy(() => import('./routes/SupportPage'));
+const SemanticSearchPage = lazy(() => import('./routes/SemanticSearchPage'));
 const DesignSystemPage = lazy(() => import('./routes/DesignSystemPage'));
 const AboutPage = lazy(() => import('./routes/AboutPage'));
 const PrivacyPage = lazy(() =>
@@ -147,6 +148,14 @@ const router = createBrowserRouter([
         element: (
           <Page>
             <SupportPage />
+          </Page>
+        ),
+      },
+      {
+        path: 'semantic',
+        element: (
+          <Page>
+            <SemanticSearchPage />
           </Page>
         ),
       },

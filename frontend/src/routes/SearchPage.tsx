@@ -248,6 +248,11 @@ export default function SearchPage() {
               broadcasts, then open each timestamp to check the context.
             </p>
           </div>
+          <div className="flex justify-center">
+            <Link className="btn-secondary" to={`/semantic?q=${encodeURIComponent(q)}`}>
+              Search by meaning · compare statements
+            </Link>
+          </div>
           <SearchFiltersPanel
             q={q}
             dateFrom={dateFrom}

@@ -17,11 +17,11 @@ from .enrichment_runner import EpisodeInput, TranscriptBlockInput
 from .labeling.benchmark import EpisodePrediction, PredictedChapter
 
 OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions"
-PROMPT_VERSION = "archive-episode-enrichment-v7"
+PROMPT_VERSION = "assmold-episode-enrichment-v1"
 
 CATEGORY_LABELS: dict[str, str] = {
-    "chadvice": "Chadvice",
-    "okbuddy": "OKBuddy",
+    "commentary": "Commentary",
+    "technology": "Technology",
     "gaming": "Gaming",
     "guests": "Guests",
     "news": "News",
@@ -32,8 +32,8 @@ CATEGORY_LABELS: dict[str, str] = {
     "irl": "IRL",
 }
 CATEGORY_GUIDANCE: dict[str, str] = {
-    "chadvice": "Only the explicitly named recurring Chadvice advice segment; ordinary advice or relationship talk does not qualify.",
-    "okbuddy": "Only the explicitly named OKBuddy subreddit/reaction segment.",
+    "commentary": "Sustained discussion of opinions, personal positions, social issues, or community controversies; support with separated transcript evidence, not a passing remark.",
+    "technology": "Sustained discussion of technology, AI, software, or online platforms, not merely using a computer.",
     "gaming": "Sustained video-game play or discussion; sports, billiards, and other physical/table games do not qualify.",
     "guests": "One or more guests materially appear or participate in the stream; a person discussed but absent does not qualify.",
     "news": "Sustained coverage of current news reporting or events, not a brief news tangent.",
@@ -403,10 +403,6 @@ def _category_rejection_reason(category: dict[str, Any], episode: EpisodeInput) 
         return None
     blocks = [block_by_index[index] for index in indexes if isinstance(index, int) and index in block_by_index]
     title = (episode.title or "").casefold()
-    if slug in {"chadvice", "okbuddy"}:
-        marker = CATEGORY_LABELS[slug].casefold()
-        evidence_text = " ".join(block.text for block in blocks).casefold()
-        return None if marker in title or marker in evidence_text else "required_segment_marker_missing"
     if CATEGORY_LABELS.get(slug, "").casefold() in title:
         return None
     if len(blocks) < 2:

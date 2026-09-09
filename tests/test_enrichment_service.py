@@ -467,6 +467,6 @@ def test_enrich_video_rejects_invalid_results_before_persistence(overlap_violati
     assert finished[0]["metrics"]["cost_usd"] == 0.01
     assert finished[0]["metrics"]["run_id"] == "run-1"
     assert raised.value.archive_enrichment_failure_metrics["run_id"] == "run-1"
-    assert finished[0]["metrics"]["prompt_version"] == "archive-episode-enrichment-v7"
+    assert finished[0]["metrics"]["prompt_version"] == "assmold-episode-enrichment-v1"
     assert [call[0] for call in db.calls].count("ROLLBACK") == 1
     assert [call[0] for call in db.calls].count("COMMIT") == 2

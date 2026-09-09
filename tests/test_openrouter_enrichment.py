@@ -166,7 +166,8 @@ def test_build_openrouter_request_uses_identical_strict_controls():
     assert user["target_chapter_count"] == 6
     assert user["category_taxonomy"]["politics"] == "Politics"
     assert "video-game" in user["category_definitions"]["gaming"]
-    assert "explicitly named" in user["category_definitions"]["chadvice"]
+    assert "Sustained discussion" in user["category_definitions"]["commentary"]
+    assert "chadvice" not in user["category_definitions"]
     assert user["transcript_blocks"][1]["block_index"] == 1
 
 

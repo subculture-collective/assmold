@@ -1,0 +1,4 @@
+ARG API_IMAGE=assmold-api:682dd5e
+FROM ${API_IMAGE}
+COPY app/archive/openrouter_enrichment.py /app/app/archive/openrouter_enrichment.py
+CMD ["python3", "scripts/run_archive_enrichment_queue.py", "--continuous"]
