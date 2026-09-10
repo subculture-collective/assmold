@@ -2076,7 +2076,7 @@
       "ArchiveSummary": {
         "properties": {
           "creator_name": {
-            "default": "HasanAra",
+            "default": "assmold",
             "description": "Archive display name",
             "title": "Creator Name",
             "type": "string"
@@ -9958,7 +9958,7 @@
     },
     "/archive/summary": {
       "get": {
-        "description": "Summary statistics for HasanAra based on real VOD and transcript data.",
+        "description": "Summary statistics for assmold based on real VOD and transcript data.",
         "operationId": "archive_summary_archive_summary_get",
         "parameters": [
           {

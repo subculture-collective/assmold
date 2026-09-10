@@ -93,7 +93,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="basement-sticker" aria-hidden="true">
-          <img src="/icon.svg?v=rot-1" alt="" />
+          <img src="/icon.svg?v=rot-1" width="100" height="100" alt="" />
           <span>
             UNBRUSHED.
             <br />
@@ -103,7 +103,14 @@ export default function HomePage() {
         <span className="basement-scene-note" aria-hidden="true">
           FIG. 01 / DO NOT TOUCH THE SHIRT
         </span>
-        <img className="basement-roach hero-roach" src="/roach.svg" alt="" aria-hidden="true" />
+        <img
+          className="basement-roach hero-roach"
+          src="/roach.svg"
+          width="100"
+          height="160"
+          alt=""
+          aria-hidden="true"
+        />
         <form onSubmit={onSubmit} className="basement-search">
           <label htmlFor="home-search">SEARCH HIS STATEMENTS.</label>
           <div className="basement-search-row">

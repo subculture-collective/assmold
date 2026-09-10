@@ -308,11 +308,11 @@ test("anonymous visitors can search from the populated archive home", async ({
 }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Find the moment. Read the record." }),
+    page.getByRole("heading", { name: "ASSMOLD", exact: true }),
   ).toBeVisible();
   await expect(page.getByText("Seeded archive episode").first()).toBeVisible();
 
-  await page.getByLabel("Search the HasanAbi archive").fill("labor rights");
+  await page.getByLabel("Search the Asmongold archive").fill("labor rights");
   await page.getByRole("button", { name: "Search archive" }).click();
   await expect(page).toHaveURL(/\/search\?q=labor%20rights$/);
 });
@@ -346,7 +346,7 @@ test("legacy library and saved links render their current destinations", async (
 }) => {
   await page.goto("/streams");
   await expect(
-    page.getByRole("heading", { name: "Browse HasanAbi VODs" }),
+    page.getByRole("heading", { name: "Browse Asmongold VODs" }),
   ).toBeVisible();
   await expect(page.getByText("Seeded archive episode")).toBeVisible();
 
@@ -577,7 +577,7 @@ test("keyboard-only visitors can cite, verify, search within, and recover", asyn
   page,
 }) => {
   await page.goto("/");
-  const homeSearch = page.getByLabel("Search the HasanAbi archive");
+  const homeSearch = page.getByLabel("Search the Asmongold archive");
   await homeSearch.focus();
   await page.keyboard.type("labor");
   await page.keyboard.press("Enter");

@@ -73,6 +73,7 @@ h3,
 }
 .basement-home {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 30px;
 }
 .basement-hero {
@@ -585,6 +586,10 @@ h3,
   .basement-shell > main {
     padding: 14px 12px 22px;
   }
+
+  .basement-shell .episode-page {
+    margin-inline: -12px;
+  }
   .basement-header > .basement-navigation-bar {
     padding: 9px 15px;
   }
@@ -608,7 +613,7 @@ h3,
     gap: 7px;
   }
   .basement-wordmark {
-    font-size: clamp(65px, 17.7vw, 108px);
+    font-size: clamp(56px, 17.7vw, 108px);
     margin: 49px 0 20px -3px;
   }
   .basement-wordmark > i {

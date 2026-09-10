@@ -1,14 +1,15 @@
 # Assmold initial repository release
 
-Status: local qualification in progress, September 10, 2026. This is not a
-published release, merge record, or new production deployment.
+Status: source published September 10, 2026 at `dc51f16` on `main` and
+`codex/assmold-launch`. Initial publication is not a PR merge or production
+deployment. Hosted qualification is in progress.
 
 ## Repository and scope
 
 - Destination: https://git.subcult.tv/subculture-collective/assmold.git.
 - Source branch: `codex/assmold-launch`; starting HEAD `ed42e3a`.
-- Destination advertised no references at verification. Initial branch publication
-  must precede any meaningful remote merge/CI claim.
+- Destination was empty before initial publication. Both branches were published
+  atomically to Assmold; the HasanAra upstream push URL remains disabled.
 - Existing source changes include caption-only acquisition and its tests/Compose
   configuration, Patreon presentation, and the deployed hero photograph.
 - Preserve all existing changes. Production remains authoritative for data.
@@ -57,8 +58,17 @@ published release, merge record, or new production deployment.
 - Whole-source Black and isort checks pass; Mypy baseline reports zero current
   errors. Black normalized one existing channel-URL assignment in settings without
   changing its value.
+- Hosted run 7592 on `dc51f16` passed all 1,816 backend tests (82.33% coverage),
+  lint/type checks and Python security audit, then failed on stale OpenAPI brand
+  text. The generated contract has been refreshed without changing API types.
+- Subsequent frontend qualification found obsolete brand-name browser assertions,
+  missing decorative-image dimensions, light-theme contrast failures and mobile
+  grid/gutter overflow. Repairs preserve the existing user-journey assertions and
+  accessibility thresholds. Frontend audit dependencies were patched; npm audit
+  now reports zero vulnerabilities. A fresh hosted run must pass before deployment.
 - Broad backend and hosted CI are separate gates; focused checks do not replace
-  them. No remote publication or production mutation occurred during this work.
+  them. Production still uses the baseline below until qualified cutover evidence
+  explicitly records otherwise.
 
 ## Production baseline
 
