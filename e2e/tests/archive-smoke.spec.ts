@@ -971,26 +971,28 @@ test("public route matrix has no serious accessibility or runtime errors", async
   }
 });
 
-test("core public routes do not overflow a 320px viewport", async ({
+test("core public routes do not overflow mobile and breakpoint viewports", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 320, height: 720 });
-  for (const route of [
-    "/",
-    "/search?q=labor",
-    "/explore",
-    "/episodes",
-    `/v/${seededVideo.id}`,
-  ]) {
-    await page.goto(route);
-    await page.waitForLoadState("networkidle");
-    const dimensions = await page.evaluate(() => ({
-      clientWidth: document.documentElement.clientWidth,
-      scrollWidth: document.documentElement.scrollWidth,
-    }));
-    expect(
-      dimensions.scrollWidth,
-      `${route} horizontal overflow`,
-    ).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+  for (const width of [320, 639, 640, 768]) {
+    await page.setViewportSize({ width, height: 720 });
+    for (const route of [
+      "/",
+      "/search?q=labor",
+      "/explore",
+      "/episodes",
+      `/v/${seededVideo.id}`,
+    ]) {
+      await page.goto(route);
+      await page.waitForLoadState("networkidle");
+      const dimensions = await page.evaluate(() => ({
+        clientWidth: document.documentElement.clientWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+      }));
+      expect(
+        dimensions.scrollWidth,
+        `${route} horizontal overflow at ${width}px`,
+      ).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+    }
   }
 });

@@ -582,7 +582,7 @@ h3,
     display: none;
   }
 }
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   .basement-shell > main {
     padding: 14px 12px 22px;
   }
