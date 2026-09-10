@@ -1,6 +1,8 @@
 import uuid
+from datetime import datetime, timezone
 from unittest.mock import MagicMock
 
+import pytest
 import requests
 from fastapi import Request
 
@@ -24,6 +26,56 @@ class FakeDB:
 
     def rollback(self):
         self.calls.append(("rollback", None))
+
+
+@pytest.mark.parametrize("configured_backend", ["postgres", "opensearch"])
+@pytest.mark.parametrize("source", ["native", "youtube", "best"])
+def test_postgres_results_do_not_scan_opensearch_outbox(monkeypatch, configured_backend, source):
+    backend = MagicMock()
+    backend.search.return_value = []
+    freshness = MagicMock(side_effect=AssertionError("PostgreSQL results must not wait for OpenSearch telemetry"))
+    monkeypatch.setattr("app.search.orchestrator.settings.SEARCH_BACKEND", configured_backend)
+    monkeypatch.setattr("app.search.orchestrator.PostgresSearchBackend", lambda _db: backend)
+    monkeypatch.setattr("app.search.orchestrator.crud.search_best_segments_advanced", lambda *_a, **_kw: [])
+    monkeypatch.setattr("app.search.orchestrator.crud.search_youtube_segments_advanced", lambda *_a, **_kw: [])
+    monkeypatch.setattr("app.search.orchestrator.search_freshness", freshness)
+    monkeypatch.setattr(
+        "app.search.orchestrator.requests.post", MagicMock(side_effect=requests.exceptions.ConnectionError)
+    )
+    monkeypatch.setattr(
+        search_analytics,
+        "record_search_request",
+        lambda *_a, **_kw: SearchRequestContext(user_id=None, is_admin=False),
+    )
+
+    result = SearchOrchestrator().search(FakeDB(), MagicMock(spec=Request), q="taxes", source=source)
+
+    assert result.backend == "postgres"
+    assert result.indexed_at is None
+    assert result.index_lag_seconds == 0
+    assert result.degraded is (configured_backend == "opensearch")
+    freshness.assert_not_called()
+
+
+def test_opensearch_results_keep_index_freshness(monkeypatch):
+    indexed_at = datetime(2026, 9, 10, tzinfo=timezone.utc)
+    freshness = MagicMock(return_value={"indexed_at": indexed_at, "index_lag_seconds": 123})
+    response = MagicMock()
+    response.json.return_value = {"hits": {"total": {"value": 0}, "hits": []}}
+    monkeypatch.setattr("app.search.orchestrator.settings.SEARCH_BACKEND", "opensearch")
+    monkeypatch.setattr("app.search.orchestrator.requests.post", MagicMock(return_value=response))
+    monkeypatch.setattr("app.search.orchestrator.search_freshness", freshness)
+    monkeypatch.setattr(
+        search_analytics,
+        "record_search_request",
+        lambda *_a, **_kw: SearchRequestContext(user_id=None, is_admin=False),
+    )
+    db = FakeDB()
+    result = SearchOrchestrator().search(db, MagicMock(spec=Request), q="taxes", source="native")
+    assert result.backend == "opensearch"
+    assert result.indexed_at == indexed_at
+    assert result.index_lag_seconds == 123
+    freshness.assert_called_once_with(db)
 
 
 def test_record_search_request_logs_event_for_authenticated_user(monkeypatch):

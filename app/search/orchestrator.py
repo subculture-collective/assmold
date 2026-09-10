@@ -329,15 +329,16 @@ class SearchOrchestrator:
                 len(hits),
                 query_time_ms,
             )
-        freshness = search_freshness(db)
+        # PostgreSQL reads the source tables directly. OpenSearch outbox lag is
+        # unrelated to these results and can require scanning millions of rows.
         return SearchResponse(
             total=None,
             hits=hits,
             query_time_ms=query_time_ms,
             backend="postgres",
             degraded=False,
-            indexed_at=freshness["indexed_at"],
-            index_lag_seconds=freshness["index_lag_seconds"],
+            indexed_at=None,
+            index_lag_seconds=0,
         )
 
     def _postgres_fallback(
@@ -448,15 +449,15 @@ class SearchOrchestrator:
                 len(hits),
                 query_time_ms,
             )
-        freshness = search_freshness(db)
+        # Fallback results are also direct PostgreSQL reads, not index results.
         return SearchResponse(
             total=None,
             hits=hits,
             query_time_ms=query_time_ms,
             backend="postgres",
             degraded=True,
-            indexed_at=freshness["indexed_at"],
-            index_lag_seconds=freshness["index_lag_seconds"],
+            indexed_at=None,
+            index_lag_seconds=0,
         )
 
     def grouped_search(
