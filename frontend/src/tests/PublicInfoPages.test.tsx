@@ -13,9 +13,7 @@ describe('public project pages', () => {
       </MemoryRouter>
     );
 
-    expect(
-      screen.getByRole('heading', { name: 'Welcome to the basement.' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Welcome to the basement.' })).toBeInTheDocument();
     expect(screen.getByText(/not affiliated with Asmongold/i)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Search the archive/ })).toHaveAttribute(
       'href',

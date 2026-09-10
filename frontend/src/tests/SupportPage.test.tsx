@@ -25,7 +25,11 @@ describe('SupportPage', () => {
     expect(
       await screen.findByRole('heading', { name: 'Keep the public record searchable.' })
     ).toBeInTheDocument();
-    expect(screen.getByText(/Donations are not open yet/)).toBeInTheDocument();
+    expect(screen.getByText(/Stripe donations are not open yet/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Support Subcult on Patreon/ })).toHaveAttribute(
+      'href',
+      'https://www.patreon.com/cw/subcult'
+    );
     expect(screen.queryByRole('link', { name: /Donate securely/ })).not.toBeInTheDocument();
     expect(screen.getByText('Independent project')).toBeInTheDocument();
     expect((await axe.run(container)).violations).toEqual([]);

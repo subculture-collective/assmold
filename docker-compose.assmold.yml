@@ -87,6 +87,7 @@ services:
       dockerfile: frontend/Dockerfile
       args:
         VITE_AUTH_ENABLED: 'false'
+        ASSMOLD_COMMIT: ${RELEASE_TAG:-local}
     container_name: assmold-web
     networks: [management]
     restart: unless-stopped
@@ -101,22 +102,17 @@ services:
 
   worker:
     <<: *app
-    image: assmold-worker:${RELEASE_TAG:-local}
+    image: assmold-captions:${CAPTION_RELEASE_TAG:-retry-v1}
     build:
       context: .
-      dockerfile: Dockerfile.assmold-worker
+      dockerfile: Dockerfile.assmold-captions
       args:
-        GIT_COMMIT: ${RELEASE_TAG:-local}
+        ASSMOLD_COMMIT: ${RELEASE_TAG:-local}
     environment:
       <<: *environment
       CHANNEL_SYNC_URLS: https://www.youtube.com/@AsmonTV/videos,https://www.youtube.com/@AsmongoldClips/videos
       CHANNEL_SYNC_INTERVAL_SECONDS: '21600'
-      MAX_PARALLEL_JOBS: '1'
-      WHISPER_MODEL: small
-      FORCE_GPU: 'false'
-      CLEANUP_AFTER_PROCESS: 'true'
       ENABLE_DIARIZATION: 'false'
-      HF_HOME: /root/.cache/hf
     volumes:
       - ./runtime/data:/data
       - ./runtime/cache:/root/.cache
@@ -125,12 +121,12 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
-    command: ['python3', '-m', 'worker.loop']
+    command: ['python3', '-m', 'worker.caption_only']
     healthcheck:
       disable: true
-    cpus: 2
-    mem_limit: 4g
-    stop_grace_period: 10m
+    cpus: 1
+    mem_limit: 1g
+    stop_grace_period: 60s
 
   summary-refresher:
     <<: *app

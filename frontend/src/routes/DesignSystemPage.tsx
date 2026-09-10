@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../services';
 
 const colors = [
-  ['Basement tar', 'canvas', '#15130F'],
-  ['Old shirt', 'surface', '#211E17'],
-  ['Nicotine teeth', 'ink', '#E6D6AD'],
-  ['Mold bloom', 'accent', '#C8D66A'],
-  ['Raw gums', 'danger', '#F18B72'],
-  ['Stale grease', 'warning', '#E8B35D'],
+  ['Basement tar', 'canvas', '#15130F', 'bg-canvas'],
+  ['Old shirt', 'surface', '#211E17', 'bg-surface'],
+  ['Nicotine teeth', 'ink', '#E6D6AD', 'bg-ink'],
+  ['Mold bloom', 'accent', '#C8D66A', 'bg-accent'],
+  ['Raw gums', 'danger', '#F18B72', 'bg-danger'],
+  ['Stale grease', 'warning', '#E8B35D', 'bg-warning'],
 ];
 
 export default function DesignSystemPage() {
@@ -52,9 +52,9 @@ export default function DesignSystemPage() {
           <h2 id="palette-title">Nothing here is a clean color.</h2>
         </div>
         <div className="rot-palette">
-          {colors.map(([name, token, hex]) => (
+          {colors.map(([name, token, hex, backgroundClass]) => (
             <div key={token} className="rot-swatch">
-              <div style={{ background: `var(--color-${token})` }} />
+              <div className={backgroundClass} />
               <h3>{name}</h3>
               <code>--color-{token}</code>
               <small>{theme === 'dark' ? hex : 'Light mode variant'}</small>
@@ -216,8 +216,8 @@ export default function DesignSystemPage() {
           loading="lazy"
         />
         <p className="mt-4 text-sm text-muted">
-          Original satirical Asmongold caricature. Crop around the seated character; leave the dark wall
-          for type. Food containers, stained fabric and roaches supply the visual vocabulary.
+          Original satirical Asmongold caricature. Crop around the seated character; leave the dark
+          wall for type. Food containers, stained fabric and roaches supply the visual vocabulary.
         </p>
       </section>
     </div>

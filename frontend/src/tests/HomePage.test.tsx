@@ -60,7 +60,9 @@ describe('HomePage', () => {
       expect(screen.getByRole('heading', { name: 'ASSMOLD' })).toBeInTheDocument();
     });
 
-    expect(screen.getByPlaceholderText('A position, claim, topic, or exact quote…')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('A position, claim, topic, or exact quote…')
+    ).toBeInTheDocument();
     expect(screen.getByLabelText('Search the Asmongold archive')).toBeInTheDocument();
     expect(screen.getByText('Searchable VODs')).toBeInTheDocument();
     expect(screen.getAllByText('Newest VOD').length).toBeGreaterThan(0);

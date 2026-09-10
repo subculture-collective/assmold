@@ -21,6 +21,8 @@ permissions:
 jobs:
   backend-image:
     runs-on: switchyard-production
+    # Fail closed in forks until they have their own qualified release workflow.
+    if: gitea.repository == 'subculture-collective/hasanara'
     steps:
       - name: Authorize selective backend release
         env:

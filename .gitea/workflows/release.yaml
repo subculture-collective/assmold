@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   verify:
+    # This inherited workflow publishes HasanAra images, not Assmold images.
+    if: gitea.repository == 'subculture-collective/hasanara'
     runs-on: ubuntu-latest
     steps:
       - name: Authorize prerelease or validation

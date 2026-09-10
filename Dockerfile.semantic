@@ -1,5 +1,8 @@
 ARG API_IMAGE=assmold-api:682dd5e
 FROM ${API_IMAGE}
+ARG ASSMOLD_COMMIT=unknown
+LABEL org.opencontainers.image.source="https://git.subcult.tv/subculture-collective/assmold" \
+      org.opencontainers.image.revision=${ASSMOLD_COMMIT}
 COPY semantic /app/semantic
 ENV PYTHONUNBUFFERED=1
 CMD ["uvicorn", "semantic.service:app", "--host", "0.0.0.0", "--port", "8001"]

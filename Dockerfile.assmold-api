@@ -2,6 +2,8 @@
 FROM git.subcult.tv/subculture-collective/hasanara-api@sha256:5cf777c0b94670241154121162a0b9ed459afd2e1151f4c53b5636955f53c563
 ARG ASSMOLD_COMMIT=unknown
 ENV GIT_COMMIT=${ASSMOLD_COMMIT}
+LABEL org.opencontainers.image.source="https://git.subcult.tv/subculture-collective/assmold" \
+      org.opencontainers.image.revision=${ASSMOLD_COMMIT}
 COPY app /app/app
 COPY worker/__init__.py worker/formatter.py worker/state_model.py /app/worker/
 COPY alembic /app/alembic

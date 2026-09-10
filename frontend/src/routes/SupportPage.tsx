@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services';
+import { PATREON_URL } from '../services/support';
 import type { SupportConfig } from '../types/api';
 
 const fundingLines = [
@@ -57,6 +58,9 @@ export default function SupportPage() {
               pay for the unglamorous machinery that keeps the record online, cited, and open.
             </p>
             <div className="flex flex-wrap items-center gap-3">
+              <a href={PATREON_URL} className="btn min-h-12 px-6">
+                Support Subcult on Patreon ↗
+              </a>
               {donationsEnabled ? (
                 <a
                   href={config.payment_url!}
@@ -72,10 +76,10 @@ export default function SupportPage() {
                   role="status"
                 >
                   {unavailable
-                    ? 'Donation status is temporarily unavailable.'
+                    ? 'Stripe donation status is temporarily unavailable. Patreon is available above.'
                     : config
-                      ? 'Donations are not open yet. The archive remains public.'
-                      : 'Checking donation status…'}
+                      ? 'Stripe donations are not open yet. You can support Subcult on Patreon above.'
+                      : 'Checking Stripe donation status…'}
                 </div>
               )}
               <Link to="/about" className="action-link text-sm font-semibold">
