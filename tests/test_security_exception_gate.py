@@ -134,3 +134,53 @@ def test_npm_audit_command_includes_dev_and_rejects_fatal_return(
     environment = captured["kwargs"]["env"]  # type: ignore[index]
     assert environment["NPM_CONFIG_OMIT"] == ""  # type: ignore[index]
     assert environment["NPM_CONFIG_PRODUCTION"] == "false"  # type: ignore[index]
+
+
+@pytest.mark.parametrize(
+    "packages, expected",
+    [
+        ({}, []),
+        ({"torch": "2.11.0+cu128"}, ["GHSA-rrmf-rvhw-rf47"]),
+        ({"torch": "2.13.0rc1"}, ["GHSA-rrmf-rvhw-rf47"]),
+        ({"torch": "2.13.0+cu128"}, []),
+        ({"torch": "2.14.1", "lightning": "2.6.6", "pytorch-lightning": "2.6.6"}, []),
+        ({"lightning": "2.5.5", "pytorch-lightning": "2.6.6"}, ["PYSEC-2026-3624"]),
+        ({"lightning": "2.6.6", "pytorch-lightning": "2.6.5"}, ["PYSEC-2026-3624"]),
+    ],
+)
+def test_installed_audit_selects_only_affected_distributions(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, packages: dict[str, str], expected: list[str]
+) -> None:
+    from importlib.metadata import PackageNotFoundError
+
+    from scripts.check_security_exceptions import installed_exceptions
+
+    def installed_version(name: str) -> str:
+        if name not in packages:
+            raise PackageNotFoundError(name)
+        return packages[name]
+
+    monkeypatch.setattr("scripts.check_security_exceptions.version", installed_version)
+    selected = installed_exceptions()
+    assert [item.advisory_id for item in selected] == expected
+    if expected:
+        with pytest.raises(SystemExit, match="expired"):
+            validate(today=date(2026, 10, 12), roots=(tmp_path,), exceptions=selected)
+    else:
+        validate(today=date(2026, 10, 12), roots=(tmp_path,), exceptions=selected)
+
+
+def test_installed_audit_fails_closed_on_invalid_package_version(monkeypatch: pytest.MonkeyPatch) -> None:
+    from packaging.version import InvalidVersion
+
+    from scripts.check_security_exceptions import installed_exceptions
+
+    monkeypatch.setattr("scripts.check_security_exceptions.version", lambda _: "not-a-version")
+    with pytest.raises(InvalidVersion):
+        installed_exceptions()
+
+
+def test_source_reachability_check_remains_active_without_installed_exceptions(tmp_path: Path) -> None:
+    (tmp_path / "unsafe.py").write_text("import torch\ntorch.jit.script(lambda: None)\n")
+    with pytest.raises(SystemExit, match="became reachable"):
+        validate(today=date(2026, 10, 12), roots=(tmp_path,), exceptions=())
