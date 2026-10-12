@@ -20,6 +20,7 @@ permissions:
 
 jobs:
   backend-image:
+    timeout-minutes: 120
     runs-on: switchyard-production
     # Fail closed in forks until they have their own qualified release workflow.
     if: gitea.repository == 'subculture-collective/hasanara'
