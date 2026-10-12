@@ -9,8 +9,11 @@ import os
 import subprocess
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Iterable, Never, cast
+
+from packaging.version import Version
 
 
 @dataclass(frozen=True)
@@ -18,6 +21,8 @@ class SecurityException:
     advisory_id: str
     expires_on: date
     forbidden_call: str
+    distributions: tuple[str, ...]
+    fixed_in: str
 
 
 EXCEPTIONS = (
@@ -25,11 +30,15 @@ EXCEPTIONS = (
         advisory_id="GHSA-rrmf-rvhw-rf47",
         expires_on=date(2026, 9, 13),
         forbidden_call="torch.jit.script",
+        distributions=("torch",),
+        fixed_in="2.13.0",
     ),
     SecurityException(
         advisory_id="PYSEC-2026-3624",
         expires_on=date(2026, 9, 13),
         forbidden_call="lightning.LightningModule.load_from_checkpoint",
+        distributions=("lightning", "pytorch-lightning"),
+        fixed_in="2.6.6",
     ),
 )
 
@@ -79,8 +88,23 @@ def reachable_calls(paths: Iterable[Path]) -> list[str]:
     return findings
 
 
-def validate(*, today: date, roots: Iterable[Path]) -> None:
-    expired = [item for item in EXCEPTIONS if today >= item.expires_on]
+def installed_exceptions() -> tuple[SecurityException, ...]:
+    """Select only dispositions needed by the installed-environment audit."""
+    applicable = []
+    for item in EXCEPTIONS:
+        for distribution in item.distributions:
+            try:
+                installed = version(distribution)
+            except PackageNotFoundError:
+                continue
+            if Version(installed) < Version(item.fixed_in):
+                applicable.append(item)
+                break
+    return tuple(applicable)
+
+
+def validate(*, today: date, roots: Iterable[Path], exceptions: Iterable[SecurityException] = EXCEPTIONS) -> None:
+    expired = [item for item in exceptions if today >= item.expires_on]
     if expired:
         details = ", ".join(f"{item.advisory_id} expired {item.expires_on.isoformat()}" for item in expired)
         raise SystemExit(f"security exception expired: {details}")
@@ -175,9 +199,10 @@ def main() -> None:
         return
     if args.package_dir is not None:
         parser.error("--package-dir requires --npm-audit")
-    validate(today=today, roots=(Path("app"), Path("worker")))
+    exceptions = installed_exceptions() if args.pip_audit_args else EXCEPTIONS
+    validate(today=today, roots=(Path("app"), Path("worker")), exceptions=exceptions)
     if args.pip_audit_args:
-        print(" ".join(f"--ignore-vuln {item.advisory_id}" for item in EXCEPTIONS))
+        print(" ".join(f"--ignore-vuln {item.advisory_id}" for item in exceptions))
     else:
         print("security exceptions are unexpired and unreachable")
 

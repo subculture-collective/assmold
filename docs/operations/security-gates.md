@@ -20,7 +20,17 @@ python scripts/check_security_exceptions.py --npm-audit --package-dir frontend
 ```
 
 The installed-environment pip-audit covers resolved transitive packages in
-backend CI. The three manifest audits independently cover every exact direct,
+backend CI. Its --pip-audit-args validator checks installed distribution
+metadata before selecting an exception: absent packages and patched Torch
+(2.13.0 or newer) or Lightning/pytorch-lightning (2.6.6 or newer) receive no
+ignore. An affected installed version still requires an unexpired disposition;
+malformed version metadata fails closed. The AST call restrictions remain
+active even when no installed exception is needed. The no-argument validator
+still checks all declared dispositions for manifest and ML qualification,
+including their original expiry dates. This distinction does not approve the
+older pinned production ML images.
+
+The three manifest audits independently cover every exact direct,
 full-snapshot, and image-specific ML runtime pin without invoking package build
 hooks. Each CPU, CUDA 12.8, and ROCm 7.1 image runs `pip check`, imports Torch,
 TorchAudio, TorchCodec, and pyannote, and is blocked by fixed high/critical
@@ -46,8 +56,8 @@ by the diarization worker. The vulnerable path imports an attacker-controlled
 `_instantiator` while loading a Lightning checkpoint. HasanAra does not accept
 checkpoint or model uploads, does not call `LightningModule.load_from_checkpoint`,
 and keeps model identifiers operator-controlled; CI fails if a direct call is
-introduced. Upstream has committed a fix but has not published a patched PyPI
-release.
+introduced. Upstream has published patched release 2.6.6; the pinned worker inventory
+still requires a compatible upgrade and qualification.
 
 - Owner: backend maintainers
 - Approved: 2026-08-07
