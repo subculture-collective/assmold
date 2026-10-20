@@ -1,0 +1,12 @@
+{
+  "source": "frontend/public/social-card.svg",
+  "source_sha256": "a59016f9fdda6f6b5472ec5060261e8f295ad4f5ed87964683cdb95ee0f9d2e2",
+  "output": "frontend/public/social-card.png",
+  "output_sha256": "6d1a94166306ffa3f83049d176e11dc80e57f62f185045a917e9e81520930b36",
+  "dimensions": [
+    1200,
+    630
+  ],
+  "command": "rsvg-convert --width 1200 --height 630 --output frontend/public/social-card.png frontend/public/social-card.svg",
+  "note": "Raster export of the existing public artwork; the SVG source is retained."
+}
