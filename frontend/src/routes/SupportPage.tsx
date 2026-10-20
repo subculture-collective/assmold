@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../services';
-import { PATREON_URL } from '../services/support';
-import type { SupportConfig } from '../types/api';
+import { SUPPORT_URL } from '../services/support';
 
 const fundingLines = [
   {
@@ -23,26 +20,6 @@ const fundingLines = [
 ];
 
 export default function SupportPage() {
-  const [config, setConfig] = useState<SupportConfig | null>(null);
-  const [unavailable, setUnavailable] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-    api
-      .getSupportConfig()
-      .then((next) => {
-        if (active) setConfig(next);
-      })
-      .catch(() => {
-        if (active) setUnavailable(true);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  const donationsEnabled = config?.donations_enabled && config.payment_url;
-
   return (
     <div className="space-y-5 lg:space-y-7">
       <section className="archive-masthead overflow-hidden">
@@ -54,34 +31,13 @@ export default function SupportPage() {
             </div>
             <h1 className="archive-display">Keep the public record searchable.</h1>
             <p className="max-w-2xl text-lg leading-8 text-muted sm:text-xl">
-              assmold turns years of livestreams into a searchable, timestamped archive. Donations
-              pay for the unglamorous machinery that keeps the record online, cited, and open.
+              SUBCULT maintains the tools behind this unofficial archive. Support the studio’s work
+              on searchable archives and independent software.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <a href={PATREON_URL} className="btn min-h-12 px-6">
-                Support Subcult on Patreon ↗
+              <a href={SUPPORT_URL} className="btn min-h-12 px-6">
+                Support SUBCULT
               </a>
-              {donationsEnabled ? (
-                <a
-                  href={config.payment_url!}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn min-h-12 px-6"
-                >
-                  Donate securely with Stripe ↗
-                </a>
-              ) : (
-                <div
-                  className="rounded-lg border border-border bg-surface-muted px-4 py-3 text-sm text-muted"
-                  role="status"
-                >
-                  {unavailable
-                    ? 'Stripe donation status is temporarily unavailable. Patreon is available above.'
-                    : config
-                      ? 'Stripe donations are not open yet. You can support Subcult on Patreon above.'
-                      : 'Checking Stripe donation status…'}
-                </div>
-              )}
               <Link to="/about" className="action-link text-sm font-semibold">
                 How the archive works →
               </Link>
@@ -94,9 +50,9 @@ export default function SupportPage() {
               Built by Subcult. Not operated by or affiliated with Asmongold, Twitch, or YouTube.
             </p>
             <p className="mt-4 text-sm leading-6 text-muted">
-              A donation supports assmold’s hosting and research infrastructure. It does not buy
-              editorial influence, special access, or content from the creator whose public
-              broadcasts are indexed here.
+              Contributions go to SUBCULT, not Asmongold. They support the studio across its
+              projects and do not buy editorial influence, special access or content from the
+              creators whose broadcasts are indexed here.
             </p>
           </aside>
         </div>
@@ -126,17 +82,17 @@ export default function SupportPage() {
         <div className="archive-section">
           <div className="archive-eyebrow">Payment boundary</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-ink">
-            Card details never touch assmold.
+            Support goes to the studio.
           </h2>
           <p className="mt-3 text-sm leading-6 text-muted">
-            The donation button opens a Stripe-hosted checkout. Stripe handles payment confirmation;
-            assmold does not collect or store your card number.
+            The central Support page explains SUBCULT’s offer and links to Patreon. Support is
+            voluntary and separate from archive access. No payment details are collected here.
           </p>
         </div>
         <div className="archive-section">
           <div className="archive-eyebrow">No access tier</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-ink">
-            The archive stays public whether you donate or not.
+            The archive stays public whether you contribute or not.
           </h2>
           <p className="mt-3 text-sm leading-6 text-muted">
             Search, transcripts, episode pages, and cited source links remain available without a

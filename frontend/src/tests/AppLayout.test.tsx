@@ -61,16 +61,14 @@ describe('AppLayout navigation', () => {
     }
   });
 
-  it('exposes Patreon in the persistent header without opening the mobile menu', () => {
+  it('keeps studio support in the footer rather than a persistent fundraising banner', () => {
     render(<AppLayout />, { wrapper: MemoryRouter });
-    expect(screen.getByText('Keep the filth searchable.')).toBeInTheDocument();
-    expect(screen.queryByRole('navigation', { name: 'Mobile navigation' })).not.toBeInTheDocument();
     expect(
-      within(screen.getByRole('banner')).getByRole('link', { name: /Support Subcult on Patreon/ })
-    ).toHaveAttribute('href', 'https://www.patreon.com/cw/subcult');
+      within(screen.getByRole('banner')).queryByRole('link', { name: /Support SUBCULT/ })
+    ).toBeNull();
     expect(
-      within(screen.getByRole('contentinfo')).getByRole('link', { name: /Patreon/ })
-    ).toHaveAttribute('href', 'https://www.patreon.com/cw/subcult');
+      within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Support SUBCULT' })
+    ).toHaveAttribute('href', 'https://subcult.tv/support');
   });
 
   it('only renders the mobile menu while open and restores focus on Escape', () => {
