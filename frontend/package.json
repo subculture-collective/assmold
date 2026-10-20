@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/prerender-meta.mjs",
     "bundle:check": "node scripts/check-bundle-budget.mjs",
     "api:generate": "cd .. && ${PYTHON_BIN:-python3} scripts/generate_openapi.py docs/api/openapi.json && npm --prefix frontend exec openapi-typescript -- docs/api/openapi.json --output frontend/src/types/generated/api.ts && npm --prefix frontend exec prettier -- --write frontend/src/types/generated/api.ts",
     "api:check": "cd .. && PYTHON_BIN=${PYTHON_BIN:-python3} scripts/check_api_contracts.sh",

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigationType } from 'react-router-dom';
 import { useAuth, useTheme } from '../services';
-import { PATREON_URL } from '../services/support';
+import { SUPPORT_URL } from '../services/support';
 import { LightRoaches, CigaretteSurprise } from '../components/BasementEffects';
 
 const navItems = [
@@ -490,14 +490,6 @@ export default function AppLayout() {
             {authError}
           </div>
         )}
-        <div className="patreon-banner w-full border-t border-accent/40 bg-surface px-4 py-2 lg:px-6">
-          <div className="mx-auto flex max-w-[1432px] flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-semibold text-ink">Keep the filth searchable.</p>
-            <a href={PATREON_URL} className="btn min-h-11 px-4 text-sm">
-              Support Subcult on Patreon ↗
-            </a>
-          </div>
-        </div>
       </header>
 
       <main
@@ -541,8 +533,8 @@ export default function AppLayout() {
             <Link to="/support" className="action-link text-accent">
               Support
             </Link>
-            <a href={PATREON_URL} className="action-link font-bold text-accent underline">
-              Patreon ↗
+            <a href={SUPPORT_URL} className="action-link font-bold text-accent underline">
+              Support SUBCULT
             </a>
           </nav>
         </div>
