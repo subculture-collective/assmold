@@ -45,6 +45,8 @@ jobs:
         with:
           node-version: '20'
       - name: Create isolated Python verification environment
+        env:
+          PIP_NO_CACHE_DIR: "1"
         run: |
           rm -rf -- .release-venv
           "${{ steps.python.outputs.python-path }}" -m venv .release-venv
