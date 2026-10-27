@@ -35,7 +35,7 @@ jobs:
           rm -rf -- .verify-venv
           "${{ steps.python.outputs.python-path }}" -m venv .verify-venv
           .verify-venv/bin/python -m pip install --upgrade pip
-          .verify-venv/bin/python -m pip install setuptools==83.0.0
+          .verify-venv/bin/python -m pip install setuptools==84.1.0
           .verify-venv/bin/python -m pip install -r requirements.txt -r requirements-dev.txt
       - name: Install frontend and end-to-end dependencies
         run: |
