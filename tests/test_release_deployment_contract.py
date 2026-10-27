@@ -163,7 +163,7 @@ def test_release_manifest_is_ignored_by_git_and_docker() -> None:
 
 def test_patched_runtime_dependency_pins_match_all_release_inputs() -> None:
     required = {
-        "Authlib==1.7.2",
+        "Authlib==1.9.1",
         "python-dotenv==1.2.2",
         "requests==2.34.2",
         "yt-dlp==2026.7.4",
@@ -1190,7 +1190,7 @@ def test_release_workflow_contracts() -> None:
     assert "rm -rf -- .release-venv" in setup_text
     assert '"${{ steps.python.outputs.python-path }}" -m venv .release-venv' in setup_text
     assert ".release-venv/bin/python -m pip install --upgrade pip" in setup_text
-    assert ".release-venv/bin/python -m pip install setuptools==83.0.0" in setup_text
+    assert ".release-venv/bin/python -m pip install setuptools==84.1.0" in setup_text
     assert ".release-venv/bin/python -m pip install -r requirements.txt -r requirements-dev.txt" in setup_text
     assert '${{ steps.python.outputs.python-path }}" -m pip install' not in setup_text
     assert "PYTHON_BIN: ${{ steps.python.outputs.python-path }}" not in verification_text
@@ -1212,7 +1212,7 @@ def test_release_workflow_contracts() -> None:
         "printf '%s\\n' \"$candidate\"", ""
     )
     dev_requirements = (ROOT / "requirements-dev.txt").read_text(encoding="utf-8")
-    assert "msgpack==1.2.1" in dev_requirements
+    assert "msgpack==1.2.3" in dev_requirements
     assert "CacheControl" in dev_requirements
     assert "PyPDF2" not in dev_requirements
     images = job_section("images")
